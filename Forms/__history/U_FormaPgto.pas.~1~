@@ -1,0 +1,25 @@
+unit U_FormaPgto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Padrao, Data.DB, Data.Win.ADODB,
+  Vcl.Buttons, Vcl.DBCtrls, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TFrm_forma_pgto = class(TFrm_padrao)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_forma_pgto: TFrm_forma_pgto;
+
+implementation
+
+{$R *.dfm}
+
+end.

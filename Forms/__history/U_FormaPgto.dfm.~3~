@@ -1,0 +1,23 @@
+inherited Frm_forma_pgto: TFrm_forma_pgto
+  Caption = 'CADASTRO DE FORMA DE PAGAMENTO'
+  ClientHeight = 474
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitHeight = 513
+  TextHeight = 15
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+  end
+  inherited Panel2: TPanel
+    Top = 409
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 409
+    inherited DBNavigator1: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited Q_padrao: TADOQuery
+    Active = False
+    SQL.Strings = (
+      'select * from forma_pgto order by id_forma_pgto')
+  end
+end

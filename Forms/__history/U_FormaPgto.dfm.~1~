@@ -1,0 +1,17 @@
+inherited Frm_forma_pgto: TFrm_forma_pgto
+  Caption = 'CADASTRO DE FORMA DE PAGAMENTO'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 15
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+  end
+  inherited Panel2: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited DBNavigator1: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited Q_padrao: TADOQuery
+    Active = False
+  end
+end

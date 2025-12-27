@@ -1,0 +1,12 @@
+object DM: TDM
+  Height = 874
+  Width = 1118
+  object conexao: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB;Data Source=192.168.15.11;Initial Catalog=cont' +
+      'role_estoque;User ID=sa;Password=123;'
+    Provider = 'SQLOLEDB'
+    Left = 472
+    Top = 328
+  end
+end

@@ -1,0 +1,62 @@
+unit U_Pesquisa_Padrao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Mask, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Data.Win.ADODB;
+
+type
+  TFrm_pesquisa_padrao = class(TForm)
+    Panel1: TPanel;
+    cb_chave_pesquisa: TComboBox;
+    Edit1: TEdit;
+    mk_inicio: TMaskEdit;
+    mk_fim: TMaskEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Panel2: TPanel;
+    DBGrid1: TDBGrid;
+    bt_Pesquisar: TBitBtn;
+    bt_Transferir: TBitBtn;
+    bt_imprimir: TBitBtn;
+    Q_pesq_padrao: TADOQuery;
+    ds_pesq_padrao: TDataSource;
+    procedure FormShow(Sender: TObject);
+  private
+    procedure AplicarPadraoLabels;
+  end;
+
+var
+  Frm_pesquisa_padrao: TFrm_pesquisa_padrao;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+procedure TFrm_pesquisa_padrao.AplicarPadraoLabels;
+var
+  i: Integer;
+begin
+  for i := 0 to ComponentCount - 1 do
+    if Components[i] is TLabel then
+      with TLabel(Components[i]) do
+      begin
+        Font.Name  := 'Segoe UI';
+        Font.Size  := 10;
+        Font.Style := [fsBold];
+        Font.Color := clNavy;
+      end;
+end;
+
+procedure TFrm_pesquisa_padrao.FormShow(Sender: TObject);
+begin
+  AplicarPadraoLabels;
+end;
+
+end.
+
