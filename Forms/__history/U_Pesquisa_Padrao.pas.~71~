@@ -1,0 +1,107 @@
+unit U_Pesquisa_Padrao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
+  Vcl.Mask, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Data.Win.ADODB,
+  Vcl.ComCtrls;
+
+type
+  TFrm_pesquisa_padrao = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    dbGrid: TDBGrid;
+    Q_pesq_padrao: TADOQuery;
+    ds_pesq_padrao: TDataSource;
+    Panel4: TPanel;
+    bt_imprimir: TBitBtn;
+    bt_Pesquisar: TBitBtn;
+    bt_Transferir: TBitBtn;
+    Panel5: TPanel;
+    Label3: TLabel;
+    Label2: TLabel;
+    ed_nome: TEdit;
+    lbFiltro: TLabel;
+    cb_chave_pesquisa: TComboBox;
+    Panel3: TPanel;
+    TrackBar1: TTrackBar;
+    Label1: TLabel;
+    Label4: TLabel;
+    mk_fim: TMaskEdit;
+    mk_inicio: TMaskEdit;
+    Label7: TLabel;
+    Label8: TLabel;
+    procedure FormShow(Sender: TObject);
+    procedure btnZoomPlusClick(Sender: TObject);
+    procedure btnZoomMinusClick(Sender: TObject);
+    procedure TrackBar1Change(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+  private
+    procedure AplicarPadraoLabels;
+  end;
+
+var
+  Frm_pesquisa_padrao: TFrm_pesquisa_padrao;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+procedure TFrm_pesquisa_padrao.AplicarPadraoLabels;
+var
+  i: Integer;
+begin
+  for i := 0 to ComponentCount - 1 do
+    if Components[i] is TLabel then
+      with TLabel(Components[i]) do
+      begin
+        Font.Name  := 'Segoe UI';
+        Font.Size  := 10;
+        Font.Style := [fsBold];
+        Font.Color := clNavy;
+      end;
+end;
+
+procedure TFrm_pesquisa_padrao.btnZoomMinusClick(Sender: TObject);
+begin
+  if dbGrid.Font.Size = 10 then Exit;
+    dbGrid.Font.Size := dbGrid.Font.Size - 1;
+end;
+
+procedure TFrm_pesquisa_padrao.btnZoomPlusClick(Sender: TObject);
+begin
+  if dbGrid.Font.Size = 20 then Exit;
+    dbGrid.Font.Size := dbGrid.Font.Size + 1
+end;
+
+procedure TFrm_pesquisa_padrao.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then  // #13 é o código da tecla Enter
+  begin
+    bt_pesquisar.Click;
+    Key := #0; // evita o beep
+  end;
+end;
+
+procedure TFrm_pesquisa_padrao.FormShow(Sender: TObject);
+begin
+  AplicarPadraoLabels;
+  TrackBar1.Min := 10;
+  TrackBar1.max := 25;
+  TrackBar1.Position := dbGrid.Font.Size;
+  KeyPreview := true;
+end;
+
+procedure TFrm_pesquisa_padrao.TrackBar1Change(Sender: TObject);
+begin
+  dbGrid.Font.Size := TrackBar1.Position; // controla zoom pelo slider
+end;
+
+
+
+end.
+

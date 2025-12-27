@@ -148,10 +148,6 @@
             <Form>Frm_empresa</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\Forms\U_Cliente.pas">
-            <Form>Frm_cliente</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\Forms\U_Fornecedores.pas">
             <Form>Frm_fornecedor</Form>
             <FormType>dfm</FormType>
@@ -170,6 +166,14 @@
         </DCCReference>
         <DCCReference Include="..\Forms\U_pesq_usuario.pas">
             <Form>Frm_pesquisa_usuario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Forms\U_pesq_cliente.pas">
+            <Form>Frm_pesq_cliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Forms\U_Cliente.pas">
+            <Form>Frm_cliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

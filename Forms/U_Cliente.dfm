@@ -103,11 +103,15 @@ inherited Frm_cliente: TFrm_cliente
   inherited Panel1: TPanel
     TabOrder = 10
     StyleElements = [seFont, seClient, seBorder]
+    inherited bt_Pesquisar: TBitBtn
+      OnClick = bt_PesquisarClick
+    end
   end
   inherited Panel2: TPanel
     Top = 384
     TabOrder = 11
     StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 384
     inherited DBNavigator1: TDBNavigator
       Hints.Strings = ()
     end

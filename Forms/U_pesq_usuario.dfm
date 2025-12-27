@@ -4,41 +4,62 @@ inherited Frm_pesquisa_usuario: TFrm_pesquisa_usuario
   TextHeight = 15
   inherited Panel1: TPanel
     StyleElements = [seFont, seClient, seBorder]
-    inherited lbFiltro: TLabel
+    inherited Panel4: TPanel
       StyleElements = [seFont, seClient, seBorder]
+      inherited bt_Pesquisar: TBitBtn
+        OnClick = bt_PesquisarClick
+      end
     end
-    inherited Label2: TLabel
+    inherited Panel5: TPanel
       StyleElements = [seFont, seClient, seBorder]
-    end
-    inherited Label3: TLabel
-      StyleElements = [seFont, seClient, seBorder]
-    end
-    inherited cb_chave_pesquisa: TComboBox
-      StyleElements = [seFont, seClient, seBorder]
-      OnChange = cb_chave_pesquisaChange
-      Items.Strings = (
-        'C'#211'DIGO'
-        'NOME'
-        'DESCRI'#199#195'O'
-        'CADASTRO'
-        'PER'#205'ODO'
-        'TODOS OS REGISTROS')
-    end
-    inherited Edit1: TEdit
-      StyleElements = [seFont, seClient, seBorder]
-    end
-    inherited mk_inicio: TMaskEdit
-      StyleElements = [seFont, seClient, seBorder]
-    end
-    inherited mk_fim: TMaskEdit
-      StyleElements = [seFont, seClient, seBorder]
-    end
-    inherited bt_Pesquisar: TBitBtn
-      OnClick = bt_PesquisarClick
+      inherited Label3: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label2: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited lbFiltro: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited cb_chave_pesquisa: TComboBox
+        StyleElements = [seFont, seClient, seBorder]
+        OnChange = cb_chave_pesquisaChange
+        Items.Strings = (
+          'C'#211'DIGO'
+          'NOME'
+          'DESCRI'#199#195'O'
+          'CADASTRO'
+          'PER'#205'ODO'
+          'TODOS OS REGISTROS')
+      end
+      inherited mk_fim: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited mk_inicio: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited ed_pesquisa: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
     end
   end
   inherited Panel2: TPanel
     StyleElements = [seFont, seClient, seBorder]
+    inherited Label7: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Label8: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Panel3: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label1: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label4: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
   end
   inherited Q_pesq_padrao: TADOQuery
     SQL.Strings = (

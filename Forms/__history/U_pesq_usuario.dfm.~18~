@@ -1,0 +1,92 @@
+inherited Frm_pesquisa_usuario: TFrm_pesquisa_usuario
+  Caption = 'PESQUISA USU'#193'RIOS'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 15
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Panel4: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited bt_Pesquisar: TBitBtn
+        OnClick = bt_PesquisarClick
+      end
+    end
+    inherited Panel5: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label3: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label2: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited lbFiltro: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited mk_fim: TMaskEdit
+        Width = 67
+        EditMask = '!9999-99-00;1;_'
+        Text = '    -  -  '
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 67
+      end
+      inherited mk_inicio: TMaskEdit
+        Width = 67
+        EditMask = '!9999-99-00;1;_'
+        Text = '    -  -  '
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 67
+      end
+      inherited Edit1: TEdit
+        CharCase = ecUpperCase
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited cb_chave_pesquisa: TComboBox
+        StyleElements = [seFont, seClient, seBorder]
+        Items.Strings = (
+          'C'#211'DIGO'
+          'NOME'
+          'DESCRI'#199#195'O'
+          'CADASTRO'
+          'PER'#205'ODO'
+          'TODOS OS REGISTROS')
+      end
+    end
+  end
+  inherited Panel2: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Panel3: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label1: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label4: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited Q_pesq_padrao: TADOQuery
+    SQL.Strings = (
+      'SELECT * FROM USUARIO ORDER BY ID_USUARIO')
+    object Q_pesq_padraoID_USUARIO: TAutoIncField
+      DisplayLabel = 'C'#211'DIGO'
+      FieldName = 'ID_USUARIO'
+      ReadOnly = True
+    end
+    object Q_pesq_padraoNOME: TStringField
+      FieldName = 'NOME'
+      Size = 30
+    end
+    object Q_pesq_padraoDESCRICAO: TStringField
+      DisplayWidth = 40
+      FieldName = 'DESCRICAO'
+      Size = 200
+    end
+    object Q_pesq_padraoTIPO: TStringField
+      FieldName = 'TIPO'
+      Size = 30
+    end
+    object Q_pesq_padraoCADASTRO: TWideStringField
+      FieldName = 'CADASTRO'
+      Size = 10
+    end
+  end
+end

@@ -11,6 +11,7 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
   Font.Name = 'Segoe UI'
   Font.Style = []
   WindowState = wsMaximized
+  OnKeyPress = FormKeyPress
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -22,9 +23,6 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
     Color = 16776176
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -8
-    ExplicitTop = -48
-    ExplicitWidth = 1011
     object Panel4: TPanel
       Left = 824
       Top = 1
@@ -173,7 +171,7 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
         TabOrder = 0
       end
       object bt_Pesquisar: TBitBtn
-        Left = 16
+        Left = 0
         Top = 50
         Width = 110
         Height = 30
@@ -312,7 +310,7 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
         TabOrder = 1
       end
       object bt_Transferir: TBitBtn
-        Left = 148
+        Left = 143
         Top = 51
         Width = 110
         Height = 28
@@ -459,16 +457,15 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitTop = -4
       object Label3: TLabel
-        Left = 546
+        Left = 506
         Top = 36
         Width = 20
         Height = 15
         Caption = 'Fim'
       end
       object Label2: TLabel
-        Left = 451
+        Left = 411
         Top = 36
         Width = 29
         Height = 15
@@ -481,47 +478,47 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
         Height = 15
         Caption = 'Dados'
       end
-      object mk_fim: TMaskEdit
-        Left = 546
-        Top = 57
-        Width = 73
-        Height = 23
-        EditMask = '!99/99/00;0;_'
-        MaxLength = 8
-        TabOrder = 0
-        Text = ''
-      end
-      object mk_inicio: TMaskEdit
-        Left = 451
-        Top = 57
-        Width = 73
-        Height = 23
-        EditMask = '!99/99/00;0;_'
-        MaxLength = 8
-        TabOrder = 1
-        Text = ''
-      end
-      object Edit1: TEdit
-        Left = 188
-        Top = 57
-        Width = 201
-        Height = 23
-        TabOrder = 2
-      end
       object cb_chave_pesquisa: TComboBox
         Left = 16
         Top = 57
         Width = 145
         Height = 23
-        TabOrder = 3
+        TabOrder = 2
         Text = 'Op'#231#227'o de Pesquisa'
-        OnChange = cb_chave_pesquisaChange
         Items.Strings = (
           'C'#211'DIGO'
           'NOME'
           'DESCRI'#199#195'O'
           'CADASTRO'
           'PER'#205'ODO')
+      end
+      object mk_fim: TMaskEdit
+        Left = 506
+        Top = 57
+        Width = 65
+        Height = 23
+        EditMask = '!99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 1
+        Text = '  /  /    '
+      end
+      object mk_inicio: TMaskEdit
+        Left = 411
+        Top = 57
+        Width = 65
+        Height = 23
+        EditMask = '!99/99/0000;1;_'
+        MaxLength = 10
+        TabOrder = 0
+        Text = '  /  /    '
+      end
+      object ed_pesquisa: TMaskEdit
+        Left = 188
+        Top = 57
+        Width = 189
+        Height = 23
+        TabOrder = 3
+        Text = 'ed_pesquisa'
       end
     end
   end
@@ -534,7 +531,22 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
     Color = 16776176
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 1011
+    object Label7: TLabel
+      Left = 17
+      Top = 16
+      Width = 31
+      Height = 15
+      Caption = 'Dicas:'
+    end
+    object Label8: TLabel
+      Left = 33
+      Top = 31
+      Width = 380
+      Height = 15
+      Caption = 
+        #55357#56393' Ap'#243's inserir os dados, pressione a tecla ENTER para iniciar a' +
+        ' pesquisa.'
+    end
     object Panel3: TPanel
       Left = 688
       Top = 1
@@ -590,7 +602,6 @@ object Frm_pesquisa_padrao: TFrm_pesquisa_padrao
     TitleFont.Style = []
   end
   object Q_pesq_padrao: TADOQuery
-    Active = True
     Connection = DM.conexao
     CursorType = ctStatic
     Parameters = <>

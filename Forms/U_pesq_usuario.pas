@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TFrm_pesquisa_usuario = class(TFrm_pesquisa_padrao)
@@ -14,7 +14,7 @@ type
     Q_pesq_padraoNOME: TStringField;
     Q_pesq_padraoDESCRICAO: TStringField;
     Q_pesq_padraoTIPO: TStringField;
-    Q_pesq_padraoCADASTRO: TWideStringField;
+    Q_pesq_padraoCADASTRO: TWideStringField; // substituindo ed_nome por ed_pesquisa
     procedure bt_PesquisarClick(Sender: TObject);
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -34,95 +34,125 @@ implementation
 procedure TFrm_pesquisa_usuario.bt_PesquisarClick(Sender: TObject);
 begin
   with Q_pesq_padrao do
-    begin
-      Close;
-      SQL.Clear;
-      SQL.Add('SELECT id_usuario, nome, descricao, tipo, cadastro FROM usuario');
-        case cb_chave_pesquisa.ItemIndex of
-          0:
-            begin
-              SQL.Add('WHERE id_usuario = :Pid_usuario');
-              Parameters.ParamByName('Pid_usuario').Value := Edit1.Text;
-              Open;
-            end;
-          1:
-            begin
-              SQL.Add('WHERE nome like :Pnome');
-              Parameters.ParamByName('Pnome').Value := '%' + edit1.Text + '%';
-              Open;
-            end;
-          2:
-            begin
-              SQL.Add('WHERE descricao like :Pdescricao');
-              Parameters.ParamByName('Pdescricao').Value := '%' + edit1.text + '%';
-              Open;
-            end;
-          5:
-            begin
-              Open;
-            end;
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT id_usuario, nome, descricao, tipo, cadastro FROM usuario');
+    case cb_chave_pesquisa.ItemIndex of
+      0:
+        begin
+          SQL.Add('WHERE id_usuario = :Pid_usuario');
+          Parameters.ParamByName('Pid_usuario').Value := ed_pesquisa.Text;
+          Open;
         end;
-end;
+      1:
+        begin
+          SQL.Add('WHERE nome like :Pnome');
+          Parameters.ParamByName('Pnome').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      2:
+        begin
+          SQL.Add('WHERE descricao like :Pdescricao');
+          Parameters.ParamByName('Pdescricao').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      3:
+        begin
+          var Data: TDateTime;
+          FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+          FormatSettings.DateSeparator := '/';
 
+          if TryStrToDate(mk_inicio.Text, Data, FormatSettings) then
+          begin
+            SQL.Add('WHERE cadastro = :Pcadastro');
+            Parameters.ParamByName('Pcadastro').Value := Data;
+            Open;
+          end
+          else
+            ShowMessage('Data inválida. Use o formato DD/MM/AAAA.');
+        end;
+      4:
+        begin
+          var DataInicio, DataFim: TDateTime;
+          FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+          FormatSettings.DateSeparator := '/';
 
+          if TryStrToDate(mk_inicio.Text, DataInicio, FormatSettings) then
+            if TryStrToDate(mk_fim.Text, DataFim, FormatSettings) then
+            begin
+              SQL.Add('WHERE cadastro BETWEEN :Pinicio AND :Pfim');
+              Parameters.ParamByName('Pinicio').Value := DataInicio;
+              Parameters.ParamByName('Pfim').Value := DataFim;
+              Open;
+            end
+            else
+              ShowMessage('Data final inválida. Use o formato DD/MM/AAAA.')
+          else
+            ShowMessage('Data inicial inválida. Use o formato DD/MM/AAAA.');
+        end;
+      5:
+        begin
+          SQL.Add('ORDER BY id_usuario');
+          Open;
+        end;
+    end;
+  end;
 
   if Q_pesq_padrao.IsEmpty then
-    begin
-      Messagedlg('Registro não encontrado!', mtinformation,[mbOk],0);
-    end
-    else
-    begin
-      abort
-    end;
+  begin
+    MessageDlg('Registro não encontrado!', mtInformation, [mbOk], 0);
+    Exit;
+  end;
 end;
-
 
 procedure TFrm_pesquisa_usuario.cb_chave_pesquisaChange(Sender: TObject);
 begin
+  // Primeiro desabilita todos os campos
+  ed_pesquisa.Enabled := False;
+  mk_inicio.Enabled := False;
+  mk_fim.Enabled := False;
+
   case cb_chave_pesquisa.ItemIndex of
-    0:   // pesquisa pelo codigo
+    0:   // pesquisa pelo código
       begin
-        Edit1.Enabled := true;
-        Edit1.SetFocus;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
         lbFiltro.Caption := 'Digite o código';
       end;
-    1:  // pesquisa pelo nome
+
+    1:   // pesquisa pelo nome
       begin
-        Edit1.Enabled := true;
-        Edit1.SetFocus;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
         lbFiltro.Caption := 'Digite o nome';
       end;
-    2:  // pesquisa pela descricao
+
+    2:   // pesquisa pela descrição
       begin
-        Edit1.Visible := true;
-        Edit1.SetFocus;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
         lbFiltro.Caption := 'Digite a descrição';
       end;
-    3: // pesquisa pela data
+
+    3:   // pesquisa pela data
       begin
-        Edit1.enabled := false;
-        mk_inicio.enabled := true;
+        mk_inicio.Enabled := True;
         mk_inicio.SetFocus;
-        mk_fim.enabled := false;
+        lbFiltro.Caption := 'Informe a data (DD/MM/AAAA)';
       end;
-    4: // pesquisa pelo periiodo
+
+    4:   // pesquisa pelo período
       begin
-        Edit1.enabled := false;
+        mk_inicio.Enabled := True;
+        mk_fim.Enabled := True;
         mk_inicio.SetFocus;
-        mk_inicio.enabled := true;
-        mk_fim.enabled := true;
+        lbFiltro.Caption := 'Informe o período (Início e Fim)';
       end;
-    5: // pesquisa todos os registros
+
+    5:   // todos os registros
       begin
-        Edit1.enabled := false;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
+        lbFiltro.Caption := 'Listando todos os registros';
       end;
   end;
 end;
@@ -130,13 +160,14 @@ end;
 procedure TFrm_pesquisa_usuario.FormShow(Sender: TObject);
 begin
   inherited;
-    with Q_pesq_padrao do
-      begin
-        Close;
-        SQL.Clear;
-        SQL.add('SELECT * FROM usuario');
-        open;
-      end;
+  with Q_pesq_padrao do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM usuario');
+    Open;
+  end;
 end;
 
 end.
+

@@ -46,6 +46,7 @@ type
     Label12: TLabel;
     DB_cadastro: TDBEdit;
     procedure bt_novoClick(Sender: TObject);
+    procedure bt_PesquisarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -59,10 +60,24 @@ implementation
 
 {$R *.dfm}
 
+uses U_pesq_cliente;
+
 procedure TFrm_cliente.bt_novoClick(Sender: TObject);
 begin
   inherited;
   DB_cadastro.Text := datetostr(now);
+end;
+
+procedure TFrm_cliente.bt_PesquisarClick(Sender: TObject);
+begin
+  inherited;
+  Frm_pesq_cliente := TFrm_pesq_cliente.Create(Self);
+  Frm_pesq_cliente.ShowModal;
+  try
+  finally
+    Frm_pesq_cliente.Free;
+    Frm_pesq_cliente := nil;
+  end;
 end;
 
 end.

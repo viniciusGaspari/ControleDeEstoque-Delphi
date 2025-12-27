@@ -21,21 +21,23 @@ type
     bt_Transferir: TBitBtn;
     Panel5: TPanel;
     Label3: TLabel;
-    mk_fim: TMaskEdit;
     Label2: TLabel;
-    mk_inicio: TMaskEdit;
-    Edit1: TEdit;
     lbFiltro: TLabel;
     cb_chave_pesquisa: TComboBox;
     Panel3: TPanel;
     TrackBar1: TTrackBar;
     Label1: TLabel;
     Label4: TLabel;
+    mk_fim: TMaskEdit;
+    mk_inicio: TMaskEdit;
+    Label7: TLabel;
+    Label8: TLabel;
+    ed_pesquisa: TMaskEdit;
     procedure FormShow(Sender: TObject);
-    procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure btnZoomPlusClick(Sender: TObject);
     procedure btnZoomMinusClick(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     procedure AplicarPadraoLabels;
   end;
@@ -76,53 +78,12 @@ begin
     dbGrid.Font.Size := dbGrid.Font.Size + 1
 end;
 
-procedure TFrm_pesquisa_padrao.cb_chave_pesquisaChange(Sender: TObject);
+procedure TFrm_pesquisa_padrao.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  case cb_chave_pesquisa.ItemIndex of
-    0:
-      begin
-        Edit1.Enabled := true;
-        Edit1.SetFocus;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
-        lbFiltro.Caption := 'Digite o código';
-      end;
-    1:
-      begin
-        Edit1.Enabled := true;
-        Edit1.SetFocus;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
-        lbFiltro.Caption := 'Digite o nome';
-      end;
-    2:
-      begin
-        Edit1.Visible := true;
-        Edit1.SetFocus;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
-        lbFiltro.Caption := 'Digite a descrição';
-      end;
-    3:
-      begin
-        Edit1.enabled := false;
-        mk_inicio.enabled := true;
-        mk_inicio.SetFocus;
-        mk_fim.enabled := false;
-      end;
-    4:
-      begin
-        Edit1.enabled := false;
-        mk_inicio.SetFocus;
-        mk_inicio.enabled := true;
-        mk_fim.enabled := true;
-      end;
-    5:
-      begin
-        Edit1.enabled := false;
-        mk_inicio.enabled := false;
-        mk_fim.enabled := false;
-      end;
+  if Key = #13 then  // #13 é o código da tecla Enter
+  begin
+    bt_pesquisar.Click;
+    Key := #0; // evita o beep
   end;
 end;
 
@@ -131,13 +92,16 @@ begin
   AplicarPadraoLabels;
   TrackBar1.Min := 10;
   TrackBar1.max := 25;
-  TrackBar1.Position := dbGrid.Font.Size; // valor inicial igual ao tamanho atual
+  TrackBar1.Position := dbGrid.Font.Size;
+  KeyPreview := true;
 end;
 
 procedure TFrm_pesquisa_padrao.TrackBar1Change(Sender: TObject);
 begin
   dbGrid.Font.Size := TrackBar1.Position; // controla zoom pelo slider
 end;
+
+
 
 end.
 
