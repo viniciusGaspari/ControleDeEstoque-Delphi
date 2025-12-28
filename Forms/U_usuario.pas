@@ -57,7 +57,11 @@ begin
   Frm_pesquisa_usuario := TFrm_pesquisa_usuario.Create(Self);
   Frm_pesquisa_usuario.ShowModal;
   try
-
+    if Frm_pesquisa_usuario.codigo > 0 then
+      begin
+        Q_padrao.Open;
+        Q_padrao.Locate('id_usuario', Frm_pesquisa_usuario.codigo, []);
+      end;
   finally
     Frm_pesquisa_usuario.Free;
     Frm_pesquisa_usuario := nil;

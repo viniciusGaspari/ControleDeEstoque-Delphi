@@ -9,6 +9,9 @@ inherited Frm_pesquisa_usuario: TFrm_pesquisa_usuario
       inherited bt_Pesquisar: TBitBtn
         OnClick = bt_PesquisarClick
       end
+      inherited bt_Transferir: TBitBtn
+        OnClick = bt_TransferirClick
+      end
     end
     inherited Panel5: TPanel
       StyleElements = [seFont, seClient, seBorder]
@@ -60,6 +63,9 @@ inherited Frm_pesquisa_usuario: TFrm_pesquisa_usuario
         StyleElements = [seFont, seClient, seBorder]
       end
     end
+  end
+  inherited dbGrid: TDBGrid
+    OnDblClick = dbGridDblClick
   end
   inherited Q_pesq_padrao: TADOQuery
     SQL.Strings = (

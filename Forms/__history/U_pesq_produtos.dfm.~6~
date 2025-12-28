@@ -1,0 +1,116 @@
+inherited Frm_pesq_produtos: TFrm_pesq_produtos
+  Caption = 'PESQUISA PRODUTOS'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 15
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Panel4: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Panel5: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label3: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label2: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited lbFiltro: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited cb_chave_pesquisa: TComboBox
+        StyleElements = [seFont, seClient, seBorder]
+        OnChange = cb_chave_pesquisaChange
+        Items.Strings = (
+          'C'#211'DIGO'
+          'DESCRI'#199#195'O'
+          'C'#211'DIGO FORNECEDOR'
+          'VALOR CUSTO'
+          'VALOR VENDA'
+          'ESTOQUE'
+          'ESTOQUE MIN'
+          'UNIDADE'
+          'CADASTRO'
+          'PER'#205'ODO'
+          'TODOS OS REGISTROS')
+      end
+      inherited mk_fim: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited mk_inicio: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited ed_pesquisa: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited Panel2: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Label7: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Label8: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Panel3: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label1: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label4: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited Q_pesq_padrao: TADOQuery
+    Active = True
+    SQL.Strings = (
+      'select * from produto order by id_produto')
+    object Q_pesq_padraoID_PRODUTO: TAutoIncField
+      DisplayLabel = 'C'#211'DIGO'
+      FieldName = 'ID_PRODUTO'
+      ReadOnly = True
+    end
+    object Q_pesq_padraoPRODUTO_DESCRICAO: TStringField
+      DisplayLabel = 'DESCRI'#199#195'O'
+      FieldName = 'PRODUTO_DESCRICAO'
+      Size = 30
+    end
+    object Q_pesq_padraoID_FORNECEDOR: TIntegerField
+      DisplayLabel = 'C'#211'DIGO FORNECEDOR'
+      FieldName = 'ID_FORNECEDOR'
+    end
+    object Q_pesq_padraoVL_CUSTO: TBCDField
+      DisplayLabel = 'VALOR CUSTO'
+      FieldName = 'VL_CUSTO'
+      Precision = 11
+      Size = 2
+    end
+    object Q_pesq_padraoVL_VENDA: TBCDField
+      DisplayLabel = 'VALOR VENDA'
+      FieldName = 'VL_VENDA'
+      Precision = 11
+      Size = 2
+    end
+    object Q_pesq_padraoESTOQUE: TBCDField
+      FieldName = 'ESTOQUE'
+      Precision = 11
+      Size = 2
+    end
+    object Q_pesq_padraoESTOQUE_MIN: TBCDField
+      DisplayLabel = 'ESTOQUE MIN'
+      FieldName = 'ESTOQUE_MIN'
+      Precision = 11
+      Size = 2
+    end
+    object Q_pesq_padraoUNIDADE: TStringField
+      FieldName = 'UNIDADE'
+      Size = 6
+    end
+    object Q_pesq_padraoCADASTRO: TWideStringField
+      FieldName = 'CADASTRO'
+      Size = 10
+    end
+  end
+end

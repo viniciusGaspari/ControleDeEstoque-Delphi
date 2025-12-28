@@ -24,6 +24,8 @@ type
     Q_pesq_padraoCADASTRO: TWideStringField; // substituindo ed_nome por ed_pesquisa
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure bt_PesquisarClick(Sender: TObject);
+    procedure bt_TransferirClick(Sender: TObject);
+    procedure dbGridDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -165,6 +167,18 @@ begin
   end
 end;
 
+procedure TFrm_pesq_cliente.bt_TransferirClick(Sender: TObject);
+begin
+  if Q_pesq_padrao.RecordCount > 0 then
+    begin
+      codigo := Q_pesq_padraoID_CLIENTE.AsInteger;
+    end
+  else
+    begin
+      abort;
+    end;
+end;
+
 procedure TFrm_pesq_cliente.cb_chave_pesquisaChange(Sender: TObject);
 begin
   inherited;
@@ -288,4 +302,11 @@ begin
       end;
   end;
 end;
+
+procedure TFrm_pesq_cliente.dbGridDblClick(Sender: TObject);
+begin
+  inherited;
+  bt_transferir.Click;
+end;
+
 end.

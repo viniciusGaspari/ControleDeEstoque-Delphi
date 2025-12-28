@@ -71,9 +71,14 @@ end;
 procedure TFrm_cliente.bt_PesquisarClick(Sender: TObject);
 begin
   inherited;
-  Frm_pesq_cliente := TFrm_pesq_cliente.Create(Self);
-  Frm_pesq_cliente.ShowModal;
+    Frm_pesq_cliente := TFrm_pesq_cliente.Create(Self);
+    Frm_pesq_cliente.ShowModal;
   try
+    if Frm_pesq_cliente.codigo > 0 then
+      begin
+        Q_padrao.Open;
+        Q_padrao.Locate('id_cliente',Frm_pesq_cliente.codigo,[]);
+      end;
   finally
     Frm_pesq_cliente.Free;
     Frm_pesq_cliente := nil;

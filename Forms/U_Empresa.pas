@@ -55,6 +55,7 @@ type
     procedure DBImage1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure bt_EditarClick(Sender: TObject);
+    procedure bt_PesquisarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,6 +69,8 @@ implementation
 
 {$R *.dfm}
 
+uses U_pesq_empresa;
+
 procedure TFrm_empresa.bt_EditarClick(Sender: TObject);
 begin
   inherited;
@@ -80,6 +83,22 @@ begin
   DB_cadastro.Text := datetostr(now);
   DB_cnpj.SetFocus;
   DBImage1.Enabled := true;
+end;
+
+procedure TFrm_empresa.bt_PesquisarClick(Sender: TObject);
+begin
+  inherited;
+  Frm_pesq_empresa := TFrm_pesq_empresa.Create(Self);
+  Frm_pesq_empresa.ShowModal;
+  try
+  if Frm_pesq_empresa.codigo > 0then
+    begin
+      Q_padrao.open;
+      Q_padrao.Locate('id_empresa', Frm_pesq_empresa.codigo, []);
+    end;
+  finally
+    Frm_pesq_empresa.free;
+  end;
 end;
 
 procedure TFrm_empresa.DBImage1Click(Sender: TObject);

@@ -1,0 +1,232 @@
+unit U_pesq_empresa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFrm_pesq_empresa = class(TFrm_pesquisa_padrao)
+    Q_pesq_padraoID_EMPRESA: TAutoIncField;
+    Q_pesq_padraoRAZAO_SOCIAL: TStringField;
+    Q_pesq_padraoDESCRICAO: TStringField;
+    Q_pesq_padraoN_FANTASIA: TStringField;
+    Q_pesq_padraoENDERECO: TStringField;
+    Q_pesq_padraoNUMERO: TIntegerField;
+    Q_pesq_padraoBAIRRO: TStringField;
+    Q_pesq_padraoCIDADE: TStringField;
+    Q_pesq_padraoUF: TStringField;
+    Q_pesq_padraoTELEFONE: TStringField;
+    Q_pesq_padraoCNPJ: TStringField;
+    Q_pesq_padraoEMAIL: TStringField;
+    Q_pesq_padraoCADASTRO: TWideStringField;
+    Q_pesq_padraocep: TStringField;
+    Q_pesq_padraologo: TBlobField;
+    ComboBox1: TComboBox;
+    // demais componentes e métodos...
+    procedure cb_chave_pesquisaChange(Sender: TObject);
+    procedure bt_PesquisarClick(Sender: TObject);
+    procedure bt_TransferirClick(Sender: TObject);
+    procedure dbGridDblClick(Sender: TObject);
+  private
+  public
+  end;
+
+
+var
+  Frm_pesq_empresa: TFrm_pesq_empresa;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrm_pesq_empresa.bt_PesquisarClick(Sender: TObject);
+begin
+  inherited;
+  with Q_pesq_padrao do
+  begin
+    Close;
+    SQL.Clear;
+    Parameters.Clear;
+    SQL.Add('SELECT * FROM EMPRESA');
+
+    case cb_chave_pesquisa.ItemIndex of
+      0: begin
+           SQL.Add('WHERE ID_EMPRESA = :Pid_empresa');
+           Parameters.ParamByName('Pid_empresa').Value := StrToIntDef(ed_pesquisa.Text, 0);
+           Open;
+         end;
+      1: begin
+           SQL.Add('WHERE RAZAO_SOCIAL LIKE :Prazao');
+           Parameters.ParamByName('Prazao').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      2: begin
+           SQL.Add('WHERE DESCRICAO LIKE :Pdescricao');
+           Parameters.ParamByName('Pdescricao').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      3: begin
+           SQL.Add('WHERE N_FANTASIA LIKE :Pfantasia');
+           Parameters.ParamByName('Pfantasia').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      4: begin
+           SQL.Add('WHERE ENDERECO LIKE :Pendereco');
+           Parameters.ParamByName('Pendereco').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      5: begin
+           SQL.Add('WHERE CEP = :Pcep');
+           Parameters.ParamByName('Pcep').Value := ed_pesquisa.Text;
+           Open;
+         end;
+      6: begin
+           SQL.Add('WHERE NUMERO = :Pnumero');
+           Parameters.ParamByName('Pnumero').Value := StrToIntDef(ed_pesquisa.Text,0);
+           Open;
+         end;
+      7: begin
+           SQL.Add('WHERE BAIRRO LIKE :Pbairro');
+           Parameters.ParamByName('Pbairro').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      8: begin
+           SQL.Add('WHERE CIDADE LIKE :Pcidade');
+           Parameters.ParamByName('Pcidade').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      9: begin
+           SQL.Add('WHERE UF LIKE :Puf');
+           Parameters.ParamByName('Puf').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      10: begin
+           SQL.Add('WHERE TELEFONE = :Ptelefone');
+           Parameters.ParamByName('Ptelefone').Value := ed_pesquisa.Text;
+           Open;
+         end;
+      11: begin
+           SQL.Add('WHERE CNPJ = :Pcnpj');
+           Parameters.ParamByName('Pcnpj').Value := ed_pesquisa.Text;
+           Open;
+         end;
+      12: begin
+           SQL.Add('WHERE EMAIL LIKE :Pemail');
+           Parameters.ParamByName('Pemail').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      13: begin
+           var Data: TDateTime;
+           if TryStrToDate(mk_inicio.Text, Data) then
+           begin
+             SQL.Add('WHERE CADASTRO = :Pcadastro');
+             Parameters.ParamByName('Pcadastro').Value := Data;
+             Open;
+           end
+           else
+             ShowMessage('Data inválida. Use o formato DD/MM/AAAA.');
+         end;
+      14: begin
+           var dataInicio, dataFim: TDateTime;
+           if TryStrToDate(mk_inicio.Text, dataInicio) and TryStrToDate(mk_fim.Text, dataFim) then
+           begin
+             SQL.Add('WHERE CADASTRO BETWEEN :Pinicio AND :Pfim');
+             Parameters.ParamByName('Pinicio').Value := dataInicio;
+             Parameters.ParamByName('Pfim').Value := dataFim;
+             Open;
+           end
+           else
+             ShowMessage('Período inválido. Use o formato DD/MM/AAAA.');
+         end;
+      15: begin
+           SQL.Add('ORDER BY ID_EMPRESA');
+           Open;
+         end;
+    end;
+  end;
+
+  if Q_pesq_padrao.IsEmpty then
+    MessageDlg('Registro não encontrado!', mtInformation, [mbOk], 0);
+end;
+
+procedure TFrm_pesq_empresa.bt_TransferirClick(Sender: TObject);
+begin
+  inherited;
+  if Q_pesq_padrao.RecordCount > 0 then
+    codigo := Q_pesq_padraoID_EMPRESA.AsInteger
+  else
+    Abort;
+end;
+ procedure TFrm_pesq_empresa.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cb_chave_pesquisa.Items.Clear;
+  cb_chave_pesquisa.Items.Add('Código');
+  cb_chave_pesquisa.Items.Add('Razão Social');
+  cb_chave_pesquisa.Items.Add('Descrição');
+  cb_chave_pesquisa.Items.Add('Nome Fantasia');
+  cb_chave_pesquisa.Items.Add('Endereço');
+  cb_chave_pesquisa.Items.Add('CEP');
+  cb_chave_pesquisa.Items.Add('Número');
+  cb_chave_pesquisa.Items.Add('Bairro');
+  cb_chave_pesquisa.Items.Add('Cidade');
+  cb_chave_pesquisa.Items.Add('UF');
+  cb_chave_pesquisa.Items.Add('Telefone');
+  cb_chave_pesquisa.Items.Add('CNPJ');
+  cb_chave_pesquisa.Items.Add('E-mail');
+  cb_chave_pesquisa.Items.Add('Data de Cadastro');
+  cb_chave_pesquisa.Items.Add('Período de Cadastro');
+  cb_chave_pesquisa.Items.Add('Todos os registros');
+end;
+
+procedure TFrm_pesq_empresa.cb_chave_pesquisaChange(Sender: TObject);
+begin
+  inherited;
+  ed_pesquisa.Enabled := False;
+  mk_fim.Enabled := False;
+  mk_inicio.Enabled := False;
+
+  case cb_chave_pesquisa.ItemIndex of
+    0: lbFiltro.Caption := 'Digite o código';
+    1: lbFiltro.Caption := 'Digite a razão social';
+    2: lbFiltro.Caption := 'Digite a descrição';
+    3: lbFiltro.Caption := 'Digite o nome fantasia';
+    4: lbFiltro.Caption := 'Digite o endereço';
+    5: lbFiltro.Caption := 'Digite o CEP';
+    6: lbFiltro.Caption := 'Digite o número';
+    7: lbFiltro.Caption := 'Digite o bairro';
+    8: lbFiltro.Caption := 'Digite a cidade';
+    9: lbFiltro.Caption := 'Digite o UF';
+    10: lbFiltro.Caption := 'Digite o telefone';
+    11: lbFiltro.Caption := 'Digite o CNPJ';
+    12: lbFiltro.Caption := 'Digite o e-mail';
+    13: lbFiltro.Caption := 'Informe a data (DD/MM/AAAA)';
+    14: lbFiltro.Caption := 'Informe o período (Início e Fim)';
+    15: lbFiltro.Caption := 'Listando todos os registros';
+  end;
+
+  if cb_chave_pesquisa.ItemIndex in [0..12] then
+  begin
+    ed_pesquisa.Enabled := True;
+    ed_pesquisa.SetFocus;
+  end
+  else if cb_chave_pesquisa.ItemIndex in [13,14] then
+  begin
+    mk_inicio.Enabled := True;
+    mk_fim.Enabled := True;
+    mk_inicio.SetFocus;
+  end;
+end;
+
+procedure TFrm_pesq_empresa.dbGridDblClick(Sender: TObject);
+begin
+  inherited;
+  bt_Transferir.Click;
+end;
+
+end.
+

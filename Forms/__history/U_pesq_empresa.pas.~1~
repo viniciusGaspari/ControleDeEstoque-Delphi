@@ -1,0 +1,26 @@
+unit U_pesq_empresa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFrm_pesquisa_padrao1 = class(TFrm_pesquisa_padrao)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_pesquisa_padrao1: TFrm_pesquisa_padrao1;
+
+implementation
+
+{$R *.dfm}
+
+end.

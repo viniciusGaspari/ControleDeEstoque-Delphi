@@ -1,0 +1,123 @@
+unit U_pesq_produtos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFrm_pesq_produtos = class(TFrm_pesquisa_padrao)
+    Q_pesq_padraoID_PRODUTO: TAutoIncField;
+    Q_pesq_padraoPRODUTO_DESCRICAO: TStringField;
+    Q_pesq_padraoID_FORNECEDOR: TIntegerField;
+    Q_pesq_padraoVL_CUSTO: TBCDField;
+    Q_pesq_padraoVL_VENDA: TBCDField;
+    Q_pesq_padraoESTOQUE: TBCDField;
+    Q_pesq_padraoESTOQUE_MIN: TBCDField;
+    Q_pesq_padraoUNIDADE: TStringField;
+    Q_pesq_padraoCADASTRO: TWideStringField;
+    procedure cb_chave_pesquisaChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_pesq_produtos: TFrm_pesq_produtos;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrm_pesq_produtos.cb_chave_pesquisaChange(Sender: TObject);
+begin
+  inherited;
+begin
+  inherited;
+  with Q_pesq_padrao do
+  begin
+    Close;
+    SQL.Clear;
+    Parameters.Clear;
+    SQL.Add('SELECT * FROM FORNECEDOR');
+
+    case cb_chave_pesquisa.ItemIndex of
+      0:
+        begin
+          SQL.Add('WHERE ID_FORNECEDOR = :Pid_fornecedor');
+          Parameters.ParamByName('Pid_fornecedor').Value := StrToIntDef(ed_pesquisa.Text, 0);
+          Open;
+        end;
+      1:
+        begin
+          SQL.Add('WHERE NOME LIKE :Pnome');
+          Parameters.ParamByName('Pnome').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      2:
+        begin
+          SQL.Add('WHERE ENDERECO LIKE :Pendereco');
+          Parameters.ParamByName('Pendereco').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      3:
+        begin
+          SQL.Add('WHERE NUMERO = :Pnumero');
+          Parameters.ParamByName('Pnumero').Value := StrToIntDef(ed_pesquisa.Text,0);
+          Open;
+        end;
+      4:
+        begin
+          SQL.Add('WHERE BAIRRO LIKE :Pbairro');
+          Parameters.ParamByName('Pbairro').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      5:
+        begin
+          SQL.Add('WHERE CIDADE LIKE :Pcidade');
+          Parameters.ParamByName('Pcidade').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      6:
+        begin
+          SQL.Add('WHERE UF LIKE :Puf');
+          Parameters.ParamByName('Puf').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      7:
+        begin
+          SQL.Add('WHERE CEP = :Pcep');
+          Parameters.ParamByName('Pcep').Value := ed_pesquisa.Text;
+          Open;
+        end;
+      8:
+        begin
+          SQL.Add('WHERE TELEFONE = :Ptelefone');
+          Parameters.ParamByName('Ptelefone').Value := ed_pesquisa.Text;
+          Open;
+        end;
+      9:
+        begin
+          SQL.Add('WHERE CNPJ = :Pcnpj');
+          Parameters.ParamByName('Pcnpj').Value := ed_pesquisa.Text;
+          Open;
+        end;
+      10:
+        begin
+          SQL.Add('WHERE EMAIL LIKE :Pemail');
+          Parameters.ParamByName('Pemail').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+    end;
+  end;
+
+  if (Q_pesq_padrao.IsEmpty) AND (ed_pesquisa.Text = '') then
+    MessageDlg('Registro não encontrado!', mtInformation, [mbOk], 0);
+end;
+end;
+
+end.

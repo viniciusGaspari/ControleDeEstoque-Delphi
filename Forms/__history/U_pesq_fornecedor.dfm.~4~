@@ -1,0 +1,58 @@
+inherited Frm_pesq_fornecedor: TFrm_pesq_fornecedor
+  Caption = 'PESQUISA FORNECEDOR'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 15
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Panel4: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Panel5: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label3: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label2: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited lbFiltro: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited cb_chave_pesquisa: TComboBox
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited mk_fim: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited mk_inicio: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited ed_pesquisa: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited Panel2: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Label7: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Label8: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Panel3: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label1: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label4: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited Q_pesq_padrao: TADOQuery
+    Active = True
+    SQL.Strings = (
+      'select * from fornecedor')
+  end
+end

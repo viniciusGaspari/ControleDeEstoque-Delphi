@@ -1,0 +1,306 @@
+unit U_pesq_cliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Mask, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFrm_pesq_cliente = class(TFrm_pesquisa_padrao)
+    Q_pesq_padraoID_CLIENTE: TAutoIncField;
+    Q_pesq_padraoNOME: TStringField;
+    Q_pesq_padraoENDERECO: TStringField;
+    Q_pesq_padraoNUMERO: TIntegerField;
+    Q_pesq_padraoBAIRRO: TStringField;
+    Q_pesq_padraoCIDADE: TStringField;
+    Q_pesq_padraoUF: TStringField;
+    Q_pesq_padraoCEP: TStringField;
+    Q_pesq_padraoTELEFONE: TStringField;
+    Q_pesq_padraoCPF: TStringField;
+    Q_pesq_padraoEMAIL: TStringField;
+    Q_pesq_padraoCADASTRO: TWideStringField; // substituindo ed_nome por ed_pesquisa
+    procedure cb_chave_pesquisaChange(Sender: TObject);
+    procedure bt_PesquisarClick(Sender: TObject);
+    procedure bt_TransferirClick(Sender: TObject);
+    procedure dbGridDblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_pesq_cliente: TFrm_pesq_cliente;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrm_pesq_cliente.bt_PesquisarClick(Sender: TObject);
+begin
+  inherited;
+  with Q_pesq_padrao do
+  begin
+    Close;
+    SQL.Clear;
+    Parameters.Clear;
+    SQL.Add('SELECT * FROM cliente');
+
+    case cb_chave_pesquisa.ItemIndex of
+      0:
+        begin
+          SQL.Add('WHERE id_cliente = :Pid_cliente');
+          Parameters.ParamByName('Pid_cliente').Value := StrToIntDef(ed_pesquisa.Text, 0);
+          Open;
+        end;
+      1:
+        begin
+          SQL.Add('WHERE nome LIKE :Pnome');
+          Parameters.ParamByName('Pnome').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      2:
+        begin
+          SQL.Add('WHERE endereco LIKE :Pendereco');
+          Parameters.ParamByName('Pendereco').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      3:
+        begin
+          SQL.Add('WHERE numero = :Pnumero');
+          Parameters.ParamByName('Pnumero').Value := StrToIntDef(ed_pesquisa.Text,0);
+          Open;
+        end;
+      4:
+        begin
+          SQL.Add('WHERE bairro LIKE :Pbairro');
+          Parameters.ParamByName('Pbairro').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      5:
+        begin
+          SQL.Add('WHERE cidade LIKE :Pcidade');
+          Parameters.ParamByName('Pcidade').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      6:
+        begin
+          SQL.Add('WHERE uf LIKE :Puf');
+          Parameters.ParamByName('Puf').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      7:
+        begin
+          SQL.Add('WHERE cep = :Pcep');
+          Parameters.ParamByName('Pcep').Value := StrToIntDef(ed_pesquisa.Text,0);
+          Open;
+        end;
+      8:
+        begin
+          SQL.Add('WHERE telefone = :Ptelefone');
+          Parameters.ParamByName('Ptelefone').Value := StrToIntDef(ed_pesquisa.Text,0);
+          Open;
+        end;
+      9:
+        begin
+          SQL.Add('WHERE cpf = :Pcpf');
+          Parameters.ParamByName('Pcpf').Value := StrToIntDef(ed_pesquisa.Text,0);
+          Open;
+        end;
+      10:
+        begin
+          SQL.Add('WHERE email LIKE :Pemail');
+          Parameters.ParamByName('Pemail').Value := '%' + ed_pesquisa.Text + '%';
+          Open;
+        end;
+      11:
+        begin
+          var Data: TDateTime;
+          FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+          FormatSettings.DateSeparator := '/';
+
+          if TryStrToDate(mk_inicio.Text, Data, FormatSettings) then
+            begin
+              SQL.Add('WHERE cadastro = :Pcadastro');
+              Parameters.ParamByName('Pcadastro').Value := Data;
+              Open;
+            end
+          else
+            ShowMessage('Data inválida. Use o formato DD/MM/AAAA.');
+        end;
+      12:
+        begin
+          var dataInicio, dataFim: TDateTime;
+          FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
+          FormatSettings.DateSeparator := '/';
+
+          if TryStrToDate(mk_inicio.Text, dataInicio, FormatSettings) then
+          begin
+            if TryStrToDate(mk_fim.Text, dataFim, FormatSettings) then
+            begin
+              SQL.Add('WHERE cadastro BETWEEN :Pinicio AND :Pfim');
+              Parameters.ParamByName('Pinicio').Value := dataInicio;
+              Parameters.ParamByName('Pfim').Value := dataFim;
+              Open;
+            end
+            else
+              ShowMessage('Data final inválida. Use o formato DD/MM/AAAA.');
+          end
+          else
+            ShowMessage('Data inicial inválida. Use o formato DD/MM/AAAA.');
+        end;
+      13:
+        begin
+          SQL.Add('ORDER BY id_cliente');
+          Open;
+        end;
+    end;
+  end;
+
+  if (Q_pesq_padrao.IsEmpty) AND (ed_pesquisa.Text = '') then
+  begin
+    MessageDlg('Registro não encontrado!', mtInformation, [mbOk], 0);
+    Exit;
+  end
+end;
+
+procedure TFrm_pesq_cliente.bt_TransferirClick(Sender: TObject);
+begin
+  if Q_pesq_padrao.RecordCount > 0 then exit;
+    codigo := Q_pesq_padraoID_CLIENTE.AsInteger;
+end;
+
+procedure TFrm_pesq_cliente.cb_chave_pesquisaChange(Sender: TObject);
+begin
+  inherited;
+
+  ed_pesquisa.Enabled := False;
+  mk_fim.Enabled := False;
+  mk_inicio.Enabled := False;
+
+  case cb_chave_pesquisa.ItemIndex of
+    0: // pesquisa ID (Código)
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o código';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    1:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o nome';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    2:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o endereço';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    3:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o número';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    4:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o bairro';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    5:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o cidade';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    6:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o UF';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    7:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o CEP';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    8:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o telefone';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    9:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o CPF';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    10:
+      begin
+        ed_pesquisa.Enabled := True;
+        ed_pesquisa.SetFocus;
+        lbFiltro.Caption := 'Digite o e-mail';
+        mk_inicio.Enabled := False;
+        mk_fim.Enabled := False;
+      end;
+    11:
+      begin
+        ed_pesquisa.Enabled := false;
+        mk_inicio.Enabled := true;
+        mk_fim.Enabled := true;
+        mk_inicio.SetFocus;
+        lbFiltro.Caption := 'Informe a data (DD/MM/AAAA)';
+      end;
+    12:
+      begin
+        ed_pesquisa.Enabled := false;
+        mk_inicio.Enabled := true;
+        mk_fim.Enabled := true;
+        mk_inicio.SetFocus;
+        lbFiltro.Caption := 'Informe o período (Início e Fim)';
+
+      end;
+    13:
+      begin
+        ed_pesquisa.Enabled := False;
+        mk_fim.Enabled := False;
+        mk_inicio.Enabled := False;
+        lbFiltro.Caption := 'Listando todos os registros';
+      end;
+  end;
+end;
+
+procedure TFrm_pesq_cliente.dbGridDblClick(Sender: TObject);
+begin
+  inherited;
+  bt_transferir.Click;
+end;
+
+end.

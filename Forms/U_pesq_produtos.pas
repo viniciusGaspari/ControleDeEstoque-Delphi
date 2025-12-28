@@ -1,0 +1,155 @@
+unit U_pesq_produtos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
+  Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFrm_pesq_produtos = class(TFrm_pesquisa_padrao)
+    Q_pesq_padraoID_PRODUTO: TAutoIncField;
+    Q_pesq_padraoPRODUTO_DESCRICAO: TStringField;
+    Q_pesq_padraoID_FORNECEDOR: TIntegerField;
+    Q_pesq_padraoVL_CUSTO: TBCDField;
+    Q_pesq_padraoVL_VENDA: TBCDField;
+    Q_pesq_padraoESTOQUE: TBCDField;
+    Q_pesq_padraoESTOQUE_MIN: TBCDField;
+    Q_pesq_padraoUNIDADE: TStringField;
+    Q_pesq_padraoCADASTRO: TWideStringField;
+    procedure cb_chave_pesquisaChange(Sender: TObject);
+    procedure bt_PesquisarClick(Sender: TObject);
+  private
+  public
+  end;
+
+var
+  Frm_pesq_produtos: TFrm_pesq_produtos;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrm_pesq_produtos.bt_PesquisarClick(Sender: TObject);
+begin
+  inherited;
+  with Q_pesq_padrao do
+  begin
+    Close;
+    SQL.Clear;
+    Parameters.Clear;
+    SQL.Add('SELECT * FROM PRODUTO');
+
+    case cb_chave_pesquisa.ItemIndex of
+      0: begin
+           SQL.Add('WHERE ID_PRODUTO = :Pid');
+           Parameters.ParamByName('Pid').Value := StrToIntDef(ed_pesquisa.Text, 0);
+           Open;
+         end;
+      1: begin
+           SQL.Add('WHERE PRODUTO_DESCRICAO LIKE :Pdesc');
+           Parameters.ParamByName('Pdesc').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      2: begin
+           SQL.Add('WHERE ID_FORNECEDOR = :Pforn');
+           Parameters.ParamByName('Pforn').Value := StrToIntDef(ed_pesquisa.Text, 0);
+           Open;
+         end;
+      3: begin
+           SQL.Add('WHERE VL_CUSTO = :Pcusto');
+           Parameters.ParamByName('Pcusto').Value := StrToFloatDef(ed_pesquisa.Text,0);
+           Open;
+         end;
+      4: begin
+           SQL.Add('WHERE VL_VENDA = :Pvenda');
+           Parameters.ParamByName('Pvenda').Value := StrToFloatDef(ed_pesquisa.Text,0);
+           Open;
+         end;
+      5: begin
+           SQL.Add('WHERE ESTOQUE = :Pestoque');
+           Parameters.ParamByName('Pestoque').Value := StrToFloatDef(ed_pesquisa.Text,0);
+           Open;
+         end;
+      6: begin
+           SQL.Add('WHERE ESTOQUE_MIN = :PestoqueMin');
+           Parameters.ParamByName('PestoqueMin').Value := StrToFloatDef(ed_pesquisa.Text,0);
+           Open;
+         end;
+      7: begin
+           SQL.Add('WHERE UNIDADE LIKE :Punidade');
+           Parameters.ParamByName('Punidade').Value := '%' + ed_pesquisa.Text + '%';
+           Open;
+         end;
+      8: begin
+           var Data: TDateTime;
+           if TryStrToDate(mk_inicio.Text, Data) then
+           begin
+             SQL.Add('WHERE CADASTRO = :Pcadastro');
+             Parameters.ParamByName('Pcadastro').Value := Data;
+             Open;
+           end
+           else
+             ShowMessage('Data inválida. Use o formato DD/MM/AAAA.');
+         end;
+      9: begin
+           var dataInicio, dataFim: TDateTime;
+           if TryStrToDate(mk_inicio.Text, dataInicio) and TryStrToDate(mk_fim.Text, dataFim) then
+           begin
+             SQL.Add('WHERE CADASTRO BETWEEN :Pinicio AND :Pfim');
+             Parameters.ParamByName('Pinicio').Value := dataInicio;
+             Parameters.ParamByName('Pfim').Value := dataFim;
+             Open;
+           end
+           else
+             ShowMessage('Período inválido. Use o formato DD/MM/AAAA.');
+         end;
+      10: begin
+            SQL.Add('ORDER BY ID_PRODUTO');
+            Open;
+          end;
+    end;
+  end;
+
+  if (Q_pesq_padrao.IsEmpty) and (ed_pesquisa.Text = '') then
+    MessageDlg('Registro não encontrado!', mtInformation, [mbOk], 0);
+end;
+
+procedure TFrm_pesq_produtos.cb_chave_pesquisaChange(Sender: TObject);
+begin
+  inherited;
+  ed_pesquisa.Enabled := False;
+  mk_fim.Enabled := False;
+  mk_inicio.Enabled := False;
+
+  case cb_chave_pesquisa.ItemIndex of
+    0: lbFiltro.Caption := 'Digite o código';
+    1: lbFiltro.Caption := 'Digite a descrição do produto';
+    2: lbFiltro.Caption := 'Digite o código do fornecedor';
+    3: lbFiltro.Caption := 'Digite o valor de custo';
+    4: lbFiltro.Caption := 'Digite o valor de venda';
+    5: lbFiltro.Caption := 'Digite o estoque';
+    6: lbFiltro.Caption := 'Digite o estoque mínimo';
+    7: lbFiltro.Caption := 'Digite a unidade';
+    8: lbFiltro.Caption := 'Informe a data (DD/MM/AAAA)';
+    9: lbFiltro.Caption := 'Informe o período (Início e Fim)';
+    10: lbFiltro.Caption := 'Listando todos os registros';
+  end;
+
+  if cb_chave_pesquisa.ItemIndex in [0..7] then
+  begin
+    ed_pesquisa.Enabled := True;
+    ed_pesquisa.SetFocus;
+  end
+  else if cb_chave_pesquisa.ItemIndex in [8,9] then
+  begin
+    mk_inicio.Enabled := True;
+    mk_fim.Enabled := True;
+    mk_inicio.SetFocus;
+  end;
+end;
+
+end.
+

@@ -18,6 +18,8 @@ type
     procedure bt_PesquisarClick(Sender: TObject);
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure bt_TransferirClick(Sender: TObject);
+    procedure dbGridDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -106,6 +108,19 @@ begin
   end;
 end;
 
+procedure TFrm_pesquisa_usuario.bt_TransferirClick(Sender: TObject);
+begin
+  inherited;
+  if Q_pesq_padrao.RecordCount > 0 then
+    begin
+      codigo := Q_pesq_padraoID_USUARIO.AsInteger;
+    end
+  else
+    begin
+      abort;
+    end;
+end;
+
 procedure TFrm_pesquisa_usuario.cb_chave_pesquisaChange(Sender: TObject);
 begin
   // Primeiro desabilita todos os campos
@@ -155,6 +170,12 @@ begin
         lbFiltro.Caption := 'Listando todos os registros';
       end;
   end;
+end;
+
+procedure TFrm_pesquisa_usuario.dbGridDblClick(Sender: TObject);
+begin
+  inherited;
+  bt_Transferir.Click;
 end;
 
 procedure TFrm_pesquisa_usuario.FormShow(Sender: TObject);

@@ -9,11 +9,13 @@ inherited Frm_pesq_cliente: TFrm_pesq_cliente
       inherited bt_Pesquisar: TBitBtn
         OnClick = bt_PesquisarClick
       end
+      inherited bt_Transferir: TBitBtn
+        ModalResult = 1
+        OnClick = bt_TransferirClick
+      end
     end
     inherited Panel5: TPanel
       StyleElements = [seFont, seClient, seBorder]
-      ExplicitLeft = -39
-      ExplicitTop = -47
       inherited Label3: TLabel
         StyleElements = [seFont, seClient, seBorder]
       end
@@ -49,7 +51,6 @@ inherited Frm_pesq_cliente: TFrm_pesq_cliente
         StyleElements = [seFont, seClient, seBorder]
       end
       inherited ed_pesquisa: TMaskEdit
-        Text = ''
         StyleElements = [seFont, seClient, seBorder]
       end
     end
@@ -71,6 +72,9 @@ inherited Frm_pesq_cliente: TFrm_pesq_cliente
         StyleElements = [seFont, seClient, seBorder]
       end
     end
+  end
+  inherited dbGrid: TDBGrid
+    OnDblClick = dbGridDblClick
   end
   inherited Q_pesq_padrao: TADOQuery
     Active = True

@@ -40,6 +40,7 @@ type
     db_nome_fornecedor: TDBEdit;
     dbc_unidade: TDBComboBox;
     procedure bt_novoClick(Sender: TObject);
+    procedure bt_PesquisarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,11 +54,25 @@ implementation
 
 {$R *.dfm}
 
+uses U_pesq_produtos;
+
 procedure TFrm_produto.bt_novoClick(Sender: TObject);
 begin
   inherited;
   db_cadastro.Text := datetostr(now);
   db_desc_produto.SetFocus;
 end;
+
+procedure TFrm_produto.bt_PesquisarClick(Sender: TObject);
+begin
+  inherited;
+  with TFrm_pesq_produtos.Create(Self) do
+    try
+      ShowModal;
+    finally
+      Free;
+    end;
+end;
+
 
 end.
