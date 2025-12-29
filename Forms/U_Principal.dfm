@@ -1,4 +1,4 @@
-object Frm_Principal: TFrm_Principal
+object Frm_principal: TFrm_principal
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
@@ -2684,7 +2684,7 @@ object Frm_Principal: TFrm_Principal
       Left = 507
       Top = 2
       Width = 110
-      Height = 88
+      Height = 90
       Cursor = crHandPoint
       Caption = '&Produtos'
       Flat = True

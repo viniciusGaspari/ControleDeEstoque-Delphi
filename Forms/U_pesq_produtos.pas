@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
-  Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Buttons, Vcl.ExtCtrls, frxSmartMemo, frxClass, frxDBSet, frCoreClasses;
 
 type
   TFrm_pesq_produtos = class(TFrm_pesquisa_padrao)
@@ -19,8 +19,11 @@ type
     Q_pesq_padraoESTOQUE_MIN: TBCDField;
     Q_pesq_padraoUNIDADE: TStringField;
     Q_pesq_padraoCADASTRO: TWideStringField;
+    frxReport: TfrxReport;
+    frxDBDataset: TfrxDBDataset;
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure bt_PesquisarClick(Sender: TObject);
+    procedure bt_imprimirClick(Sender: TObject);
   private
   public
   end;
@@ -31,6 +34,16 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFrm_pesq_produtos.bt_imprimirClick(Sender: TObject);
+var caminho: string;
+begin
+  inherited;
+  caminho := ExtractFilePath(Application.ExeName) + 'REL_PRODUTOS.fr3';
+  if FileExists(caminho) then
+    frxReport.PrepareReport(true);
+    frxReport.ShowPreparedReport;
+end;
 
 procedure TFrm_pesq_produtos.bt_PesquisarClick(Sender: TObject);
 begin

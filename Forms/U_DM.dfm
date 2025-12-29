@@ -3,7 +3,7 @@ object DM: TDM
   Width = 1118
   object conexao: TADOConnection
     ConnectionString = 
-      'Provider=SQLOLEDB;Data Source=192.168.15.8;Initial Catalog=contr' +
+      'Provider=SQLOLEDB;Data Source=192.168.15.9;Initial Catalog=contr' +
       'ole_estoque;User ID=sa;Password=123;'
     LoginPrompt = False
     Provider = 'SQLOLEDB'

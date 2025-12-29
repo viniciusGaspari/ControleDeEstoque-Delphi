@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.Mask, Vcl.StdCtrls,
-  Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Buttons, Vcl.ExtCtrls, frxSmartMemo, frxClass, frCoreClasses, frxDBSet;
 
 type
   TFrm_pesq_cliente = class(TFrm_pesquisa_padrao)
@@ -21,11 +21,14 @@ type
     Q_pesq_padraoTELEFONE: TStringField;
     Q_pesq_padraoCPF: TStringField;
     Q_pesq_padraoEMAIL: TStringField;
-    Q_pesq_padraoCADASTRO: TWideStringField; // substituindo ed_nome por ed_pesquisa
+    Q_pesq_padraoCADASTRO: TWideStringField;
+    frxDBDataset: TfrxDBDataset;
+    frxReport: TfrxReport; // substituindo ed_nome por ed_pesquisa
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure bt_PesquisarClick(Sender: TObject);
     procedure bt_TransferirClick(Sender: TObject);
     procedure dbGridDblClick(Sender: TObject);
+    procedure bt_imprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,6 +41,20 @@ var
 implementation
 
 {$R *.dfm}
+
+
+procedure TFrm_pesq_cliente.bt_imprimirClick(Sender: TObject);
+begin
+var caminho: string;
+  inherited;
+  caminho := ExtractFilePath(Application.ExeName) + 'REL_CLIENTE.fr3';
+  if frxReport.LoadFromFile(caminho) then
+    begin
+      frxReport.PrepareReport(true);
+      frxReport.ShowPreparedReport;
+    end;
+
+end;
 
 procedure TFrm_pesq_cliente.bt_PesquisarClick(Sender: TObject);
 begin

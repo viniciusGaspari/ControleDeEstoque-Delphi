@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
-  Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.ExtCtrls, Vcl.ComCtrls, frxSmartMemo, frxClass, frxDBSet, frCoreClasses,
+  U_DM; // importante para acessar DM.rel_pesq_padrao
 
 type
   TFrm_pesquisa_usuario = class(TFrm_pesquisa_padrao)
@@ -14,12 +15,15 @@ type
     Q_pesq_padraoNOME: TStringField;
     Q_pesq_padraoDESCRICAO: TStringField;
     Q_pesq_padraoTIPO: TStringField;
-    Q_pesq_padraoCADASTRO: TWideStringField; // substituindo ed_nome por ed_pesquisa
+    Q_pesq_padraoCADASTRO: TWideStringField;
+    frxReportUsuario: TfrxReport;
+    frxDBDataset: TfrxDBDataset;
     procedure bt_PesquisarClick(Sender: TObject);
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure bt_TransferirClick(Sender: TObject);
     procedure dbGridDblClick(Sender: TObject);
+    procedure bt_imprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,6 +36,20 @@ var
 implementation
 
 {$R *.dfm}
+
+
+procedure TFrm_pesquisa_usuario.bt_imprimirClick(Sender: TObject);
+var caminho: string;
+begin
+  inherited;
+  caminho := ExtractFilePath(Application.ExeName) + 'REL_USUARIO.fr3';
+  if frxReportUsuario.LoadFromFile(caminho) then
+    begin
+      frxReportUsuario.PrepareReport(true);
+      frxReportUsuario.ShowPreparedReport;
+    end;
+
+end;
 
 procedure TFrm_pesquisa_usuario.bt_PesquisarClick(Sender: TObject);
 begin
@@ -112,63 +130,51 @@ procedure TFrm_pesquisa_usuario.bt_TransferirClick(Sender: TObject);
 begin
   inherited;
   if Q_pesq_padrao.RecordCount > 0 then
-    begin
-      codigo := Q_pesq_padraoID_USUARIO.AsInteger;
-    end
+    codigo := Q_pesq_padraoID_USUARIO.AsInteger
   else
-    begin
-      abort;
-    end;
+    Abort;
 end;
 
 procedure TFrm_pesquisa_usuario.cb_chave_pesquisaChange(Sender: TObject);
 begin
-  // Primeiro desabilita todos os campos
   ed_pesquisa.Enabled := False;
   mk_inicio.Enabled := False;
   mk_fim.Enabled := False;
 
   case cb_chave_pesquisa.ItemIndex of
-    0:   // pesquisa pelo código
+    0:
       begin
         ed_pesquisa.Enabled := True;
         ed_pesquisa.SetFocus;
         lbFiltro.Caption := 'Digite o código';
       end;
-
-    1:   // pesquisa pelo nome
+    1:
       begin
         ed_pesquisa.Enabled := True;
         ed_pesquisa.SetFocus;
         lbFiltro.Caption := 'Digite o nome';
       end;
-
-    2:   // pesquisa pela descrição
+    2:
       begin
         ed_pesquisa.Enabled := True;
         ed_pesquisa.SetFocus;
         lbFiltro.Caption := 'Digite a descrição';
       end;
-
-    3:   // pesquisa pela data
+    3:
       begin
         mk_inicio.Enabled := True;
         mk_inicio.SetFocus;
         lbFiltro.Caption := 'Informe a data (DD/MM/AAAA)';
       end;
-
-    4:   // pesquisa pelo período
+    4:
       begin
         mk_inicio.Enabled := True;
         mk_fim.Enabled := True;
         mk_inicio.SetFocus;
         lbFiltro.Caption := 'Informe o período (Início e Fim)';
       end;
-
-    5:   // todos os registros
-      begin
-        lbFiltro.Caption := 'Listando todos os registros';
-      end;
+    5:
+      lbFiltro.Caption := 'Listando todos os registros';
   end;
 end;
 

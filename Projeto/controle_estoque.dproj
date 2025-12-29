@@ -128,7 +128,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\Forms\U_Principal.pas">
-            <Form>Frm_Principal</Form>
+            <Form>Frm_principal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Forms\U_DM.pas">
@@ -156,16 +156,8 @@
             <Form>Frm_forma_pgto</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\Forms\U_Pesquisa_Padrao.pas">
-            <Form>Frm_pesquisa_padrao</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\Forms\U_pesq_usuario.pas">
             <Form>Frm_pesquisa_usuario</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="..\Forms\U_pesq_cliente.pas">
-            <Form>Frm_pesq_cliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Forms\U_pesq_fornecedor.pas">
@@ -180,12 +172,18 @@
             <Form>Frm_pesq_produtos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\Forms\U_Cliente.pas">
-            <Form>Frm_cliente</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\Forms\U_pesq_empresa.pas">
             <Form>Frm_pesq_empresa</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Forms\U_Cliente.pas">
+            <Form>Frm_cliente</Form>
+        </DCCReference>
+        <DCCReference Include="..\Forms\U_Pesquisa_Padrao.pas">
+            <Form>Frm_pesquisa_padrao</Form>
+        </DCCReference>
+        <DCCReference Include="..\Forms\U_pesq_cliente.pas">
+            <Form>Frm_pesq_cliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">

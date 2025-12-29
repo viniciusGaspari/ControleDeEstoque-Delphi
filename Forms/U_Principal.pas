@@ -8,7 +8,7 @@ uses
   Vcl.Menus;
 
 type
-  TFrm_Principal = class(TForm)
+  TFrm_principal = class(TForm)
     Panel1: TPanel;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
@@ -68,7 +68,7 @@ type
   end;
 
 var
-  Frm_Principal: TFrm_Principal;
+  Frm_principal: TFrm_principal;
 
 implementation
 
@@ -76,7 +76,7 @@ implementation
 
 uses U_usuario, U_Empresa, U_Cliente, U_Fornecedores, U_Produto, U_FormaPgto;
 
-procedure TFrm_Principal.AbreTelaUsuario;
+procedure TFrm_principal.AbreTelaUsuario;
   begin
     frm_usuario := tfrm_usuario.Create(Self);
     frm_usuario.ShowModal;
@@ -88,37 +88,37 @@ procedure TFrm_Principal.AbreTelaUsuario;
     end;
   end;
 
-procedure TFrm_Principal.bt_UsuarioClick(Sender: TObject);
+procedure TFrm_principal.bt_UsuarioClick(Sender: TObject);
 begin
    AbreTelaUsuario;
 end;
 
-procedure TFrm_Principal.Cliente1Click(Sender: TObject);
+procedure TFrm_principal.Cliente1Click(Sender: TObject);
 begin
   AbreTelaCliente;
 end;
 
-procedure TFrm_Principal.Empresa1Click(Sender: TObject);
+procedure TFrm_principal.Empresa1Click(Sender: TObject);
 begin
   AbreTelaEmpresa;
 end;
 
-procedure TFrm_Principal.FormasdePgto1Click(Sender: TObject);
+procedure TFrm_principal.FormasdePgto1Click(Sender: TObject);
 begin
  AbreTelaFormaPgto;
 end;
 
-procedure TFrm_Principal.Fornecedor1Click(Sender: TObject);
+procedure TFrm_principal.Fornecedor1Click(Sender: TObject);
   begin
     AbreTelaFornecedores;
   end;
 
-procedure TFrm_Principal.Produtos1Click(Sender: TObject);
+procedure TFrm_principal.Produtos1Click(Sender: TObject);
 begin
   AbreTelaProduto;
 end;
 
-procedure TFrm_Principal.AbreTelaEmpresa;
+procedure TFrm_principal.AbreTelaEmpresa;
   begin
     Frm_empresa := TFrm_empresa.Create(Self);
     Frm_empresa.ShowModal;
@@ -129,7 +129,7 @@ procedure TFrm_Principal.AbreTelaEmpresa;
     end;
   end;
 
-procedure TFrm_Principal.AbreTelaFornecedores;
+procedure TFrm_principal.AbreTelaFornecedores;
   begin
     Frm_fornecedor := TFrm_fornecedor.Create(Self);
     Frm_fornecedor.ShowModal;
@@ -140,7 +140,7 @@ procedure TFrm_Principal.AbreTelaFornecedores;
     end;
   end;
 
-procedure TFrm_Principal.AbreTelaCliente;
+procedure TFrm_principal.AbreTelaCliente;
   begin
     Frm_cliente := TFrm_cliente.Create(Self);
     Frm_cliente.ShowModal;
@@ -150,7 +150,7 @@ procedure TFrm_Principal.AbreTelaCliente;
     end;
   end;
 
-procedure TFrm_Principal.AbreTelaProduto;
+procedure TFrm_principal.AbreTelaProduto;
   begin
     Frm_produto := TFrm_produto.Create(Self);
     Frm_produto.ShowModal;
@@ -161,7 +161,7 @@ procedure TFrm_Principal.AbreTelaProduto;
     end;
   end;
 
-procedure TFrm_Principal.AbreTelaFormaPgto;
+procedure TFrm_principal.AbreTelaFormaPgto;
   begin
     Frm_forma_pgto := TFrm_forma_pgto.Create(Self);
     Frm_forma_pgto.ShowModal;
@@ -172,17 +172,17 @@ procedure TFrm_Principal.AbreTelaFormaPgto;
     end;
   end;
 
-procedure TFrm_Principal.SpeedButton10Click(Sender: TObject);
+procedure TFrm_principal.SpeedButton10Click(Sender: TObject);
 begin
   AbreTelaCliente;
 end;
 
-procedure TFrm_Principal.SpeedButton11Click(Sender: TObject);
+procedure TFrm_principal.SpeedButton11Click(Sender: TObject);
 begin
 AbreTelaEmpresa;
 end;
 
-procedure TFrm_Principal.SpeedButton3Click(Sender: TObject);
+procedure TFrm_principal.SpeedButton3Click(Sender: TObject);
 begin
   if messagedlg('Deseja sair do sistema?', mtConfirmation, [mbYes,mbNo],0) = mrYes then
     begin
@@ -194,22 +194,22 @@ begin
     end;
 end;
 
-procedure TFrm_Principal.SpeedButton7Click(Sender: TObject);
+procedure TFrm_principal.SpeedButton7Click(Sender: TObject);
 begin
 AbreTelaFormaPgto;
 end;
 
-procedure TFrm_Principal.SpeedButton8Click(Sender: TObject);
+procedure TFrm_principal.SpeedButton8Click(Sender: TObject);
 begin
   AbreTelaProduto;
 end;
 
-procedure TFrm_Principal.SpeedButton9Click(Sender: TObject);
+procedure TFrm_principal.SpeedButton9Click(Sender: TObject);
   begin
     AbreTelaFornecedores;
   end;
 
-procedure TFrm_Principal.Timer1Timer(Sender: TObject);
+procedure TFrm_principal.Timer1Timer(Sender: TObject);
   begin
     // insere dados na status bar
     Statusbar1.Visible := true;
@@ -218,7 +218,7 @@ procedure TFrm_Principal.Timer1Timer(Sender: TObject);
     Statusbar1.Panels[2].Text := 'SEJA BEM VINDO AO SISTEMA: ';
   end;
 
-procedure TFrm_Principal.Usurio1Click(Sender: TObject);
+procedure TFrm_principal.Usurio1Click(Sender: TObject);
 begin
   AbreTelaUsuario;
 end;

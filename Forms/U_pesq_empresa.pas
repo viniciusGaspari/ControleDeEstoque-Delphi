@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
-  Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Buttons, Vcl.ExtCtrls, frxSmartMemo, frxClass, frxDBSet, frCoreClasses;
 
 type
   TFrm_pesq_empresa = class(TFrm_pesquisa_padrao)
@@ -26,11 +26,14 @@ type
     Q_pesq_padraocep: TStringField;
     Q_pesq_padraologo: TBlobField;
     ComboBox1: TComboBox;
+    frxDBDatasetEmpresa: TfrxDBDataset;
+    frxReportEmpresa: TfrxReport;
     // demais componentes e métodos...
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure bt_PesquisarClick(Sender: TObject);
     procedure bt_TransferirClick(Sender: TObject);
     procedure dbGridDblClick(Sender: TObject);
+    procedure bt_imprimirClick(Sender: TObject);
   private
   public
   end;
@@ -42,6 +45,23 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFrm_pesq_empresa.bt_imprimirClick(Sender: TObject);
+var
+  caminho: string;
+begin
+  inherited;
+  caminho := ExtractFilePath(Application.ExeName) + 'REL_EMPRESA.fr3';
+  if FileExists(caminho) then
+  begin
+    frxReportEmpresa.LoadFromFile(caminho);
+    frxReportEmpresa.PrepareReport(True);
+    frxReportEmpresa.ShowPreparedReport;
+  end
+  else
+    MessageDlg('Relatório não encontrado', mtError, [mbOk], 0);
+end;
+
 
 procedure TFrm_pesq_empresa.bt_PesquisarClick(Sender: TObject);
 begin

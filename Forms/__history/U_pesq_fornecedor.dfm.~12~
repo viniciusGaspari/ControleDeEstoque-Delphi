@@ -1,0 +1,161 @@
+inherited Frm_pesq_fornecedor: TFrm_pesq_fornecedor
+  Caption = 'PESQUISA FORNECEDOR'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 15
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Panel4: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited bt_Pesquisar: TBitBtn
+        OnClick = bt_PesquisarClick
+      end
+      inherited bt_Transferir: TBitBtn
+        OnClick = bt_TransferirClick
+      end
+    end
+    inherited Panel5: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label3: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label2: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited lbFiltro: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited cb_chave_pesquisa: TComboBox
+        StyleElements = [seFont, seClient, seBorder]
+        OnChange = cb_chave_pesquisaChange
+        Items.Strings = (
+          'C'#211'DIGO'
+          'NOME'
+          'ENDERE'#199'O'
+          'N'#218'MERO'
+          'BAIRRO'
+          'CIDADE'
+          'UF'
+          'CEP'
+          'TELEFONE'
+          'CNPJ'
+          'EMAIL'
+          'CADASTRO'
+          'PERIODO'
+          'TODOS OS REGISTROS')
+      end
+      inherited mk_fim: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited mk_inicio: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited ed_pesquisa: TMaskEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited Panel2: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    inherited Label7: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Label8: TLabel
+      StyleElements = [seFont, seClient, seBorder]
+    end
+    inherited Panel3: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      inherited Label1: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited Label4: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+      end
+    end
+  end
+  inherited dbGrid: TDBGrid
+    OnDblClick = dbGridDblClick
+  end
+  inherited Q_pesq_padrao: TADOQuery
+    Active = True
+    SQL.Strings = (
+      'select * from fornecedor')
+    object Q_pesq_padraoID_FORNECEDOR: TAutoIncField
+      DisplayLabel = 'C'#211'DIGO'
+      FieldName = 'ID_FORNECEDOR'
+      ReadOnly = True
+    end
+    object Q_pesq_padraoNOME: TStringField
+      FieldName = 'NOME'
+      Size = 30
+    end
+    object Q_pesq_padraoENDERECO: TStringField
+      FieldName = 'ENDERECO'
+      Size = 30
+    end
+    object Q_pesq_padraoNUMERO: TIntegerField
+      FieldName = 'NUMERO'
+    end
+    object Q_pesq_padraoBAIRRO: TStringField
+      FieldName = 'BAIRRO'
+      Size = 30
+    end
+    object Q_pesq_padraoCIDADE: TStringField
+      FieldName = 'CIDADE'
+      Size = 30
+    end
+    object Q_pesq_padraoUF: TStringField
+      FieldName = 'UF'
+      FixedChar = True
+      Size = 2
+    end
+    object Q_pesq_padraoCEP: TStringField
+      FieldName = 'CEP'
+      Size = 16
+    end
+    object Q_pesq_padraoTELEFONE: TStringField
+      FieldName = 'TELEFONE'
+      Size = 16
+    end
+    object Q_pesq_padraoCNPJ: TStringField
+      FieldName = 'CNPJ'
+    end
+    object Q_pesq_padraoEMAIL: TStringField
+      FieldName = 'EMAIL'
+      Size = 30
+    end
+    object Q_pesq_padraoCADASTRO: TWideStringField
+      FieldName = 'CADASTRO'
+      Size = 10
+    end
+  end
+  object frxReportFornecedor: TfrxReport
+    Version = '2026.1.4'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection, pbWatermarks]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 46019.912381863430000000
+    ReportOptions.LastChange = 46019.912381863430000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 536
+    Top = 336
+    Datasets = <>
+    Variables = <>
+    Style = <>
+    Watermarks = <>
+  end
+  object frxDBDatasetFornecedor: TfrxDBDataset
+    UserName = 'frxDBDatasetFornecedor'
+    CloseDataSource = False
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 496
+    Top = 424
+  end
+end

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Pesquisa_Padrao, Data.DB,
   Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask,
-  Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Buttons, Vcl.ExtCtrls, frxSmartMemo, frCoreClasses, frxClass, frxDBSet;
 
 type
   TFrm_pesq_fornecedor = class(TFrm_pesquisa_padrao)
@@ -22,12 +22,15 @@ type
     Q_pesq_padraoCNPJ: TStringField;
     Q_pesq_padraoEMAIL: TStringField;
     Q_pesq_padraoCADASTRO: TWideStringField;
+    frxReportFornecedor: TfrxReport;
+    frxDBDatasetFornecedor: TfrxDBDataset;
 
 
     procedure cb_chave_pesquisaChange(Sender: TObject);
     procedure bt_PesquisarClick(Sender: TObject);
     procedure bt_TransferirClick(Sender: TObject);
     procedure dbGridDblClick(Sender: TObject);
+    procedure bt_imprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,6 +43,18 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFrm_pesq_fornecedor.bt_imprimirClick(Sender: TObject);
+var caminho: string;
+begin
+  inherited;
+  caminho := ExtractFilePath(Application.ExeName) + 'REL_FORNECEDOR.fr3';
+  if FileExists(caminho) then
+    begin
+      frxReportFornecedor.PrepareReport(true);
+      frxReportFornecedor.ShowPreparedReport;
+    end;
+end;
 
 procedure TFrm_pesq_fornecedor.bt_PesquisarClick(Sender: TObject);
 begin
