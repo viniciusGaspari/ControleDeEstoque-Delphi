@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls,
-  Vcl.Menus;
+  Vcl.Menus, Vcl.StdCtrls;
 
 type
   TFrm_principal = class(TForm)
@@ -41,6 +41,8 @@ type
     ListadeCompras1: TMenuItem;
     ListadeVendas1: TMenuItem;
     SobreoSistema1: TMenuItem;
+    Panel2: TPanel;
+    Label1: TLabel;
     procedure Timer1Timer(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure bt_UsuarioClick(Sender: TObject);
@@ -57,11 +59,14 @@ type
     procedure Produtos1Click(Sender: TObject);
     procedure SpeedButton7Click(Sender: TObject);
     procedure FormasdePgto1Click(Sender: TObject);
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure Compras1Click(Sender: TObject);
   private
     procedure AbreTelaCliente;
     procedure AbreTelaFornecedores;
     procedure AbreTelaProduto;
     procedure AbreTelaFormaPgto;
+    procedure AbreTelaCompra01;
     { Private declarations }
   public
     { Public declarations }
@@ -74,7 +79,8 @@ implementation
 
 {$R *.dfm}
 
-uses U_usuario, U_Empresa, U_Cliente, U_Fornecedores, U_Produto, U_FormaPgto;
+uses U_usuario, U_Empresa, U_Cliente, U_Fornecedores, U_Produto, U_FormaPgto,
+  U_compra01;
 
 procedure TFrm_principal.AbreTelaUsuario;
   begin
@@ -96,6 +102,11 @@ end;
 procedure TFrm_principal.Cliente1Click(Sender: TObject);
 begin
   AbreTelaCliente;
+end;
+
+procedure TFrm_principal.Compras1Click(Sender: TObject);
+begin
+  AbreTelaCompra01;
 end;
 
 procedure TFrm_principal.Empresa1Click(Sender: TObject);
@@ -192,6 +203,21 @@ begin
     begin
       Abort;
     end;
+end;
+
+procedure TFrm_principal.SpeedButton6Click(Sender: TObject);
+begin
+  AbreTelaCompra01;
+end;
+
+procedure TFrm_principal.AbreTelaCompra01;
+  begin
+    Frm_compra01 := TFrm_compra01.Create(Self);
+    Frm_compra01.ShowModal;
+  try
+  finally
+    Frm_compra01.Free;
+  end;
 end;
 
 procedure TFrm_principal.SpeedButton7Click(Sender: TObject);

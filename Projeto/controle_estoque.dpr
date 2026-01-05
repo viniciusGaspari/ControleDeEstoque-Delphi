@@ -16,7 +16,9 @@ uses
   U_pesq_empresa in '..\Forms\U_pesq_empresa.pas' {Frm_pesq_empresa},
   U_Cliente in '..\Forms\U_Cliente.pas' {Frm_cliente},
   U_Pesquisa_Padrao in '..\Forms\U_Pesquisa_Padrao.pas' {Frm_pesquisa_padrao},
-  U_pesq_cliente in '..\Forms\U_pesq_cliente.pas' {Frm_pesq_cliente};
+  U_pesq_cliente in '..\Forms\U_pesq_cliente.pas' {Frm_pesq_cliente},
+  U_movimento_padrao in '..\Forms\U_movimento_padrao.pas' {Frm_padrao_movimento},
+  U_compra01 in '..\Forms\U_compra01.pas' {Frm_compra01};
 
 // ← ponto e vírgula aqui!
 
@@ -27,6 +29,8 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFrm_principal, Frm_principal);
   Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFrm_padrao_movimento, Frm_padrao_movimento);
+  Application.CreateForm(TFrm_compra01, Frm_compra01);
   Application.Run;
 end.
 

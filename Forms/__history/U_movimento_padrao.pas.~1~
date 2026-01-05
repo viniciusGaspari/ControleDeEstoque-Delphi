@@ -1,0 +1,25 @@
+unit U_movimento_padrao;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_Padrao, Data.DB, Data.Win.ADODB,
+  Vcl.Buttons, Vcl.DBCtrls, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TFrm_padrao_movimento = class(TFrm_padrao)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_padrao_movimento: TFrm_padrao_movimento;
+
+implementation
+
+{$R *.dfm}
+
+end.

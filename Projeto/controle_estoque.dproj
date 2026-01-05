@@ -186,6 +186,14 @@
             <Form>Frm_pesq_cliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\Forms\U_movimento_padrao.pas">
+            <Form>Frm_padrao_movimento</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\Forms\U_compra01.pas">
+            <Form>Frm_compra01</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

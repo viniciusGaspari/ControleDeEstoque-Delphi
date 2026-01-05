@@ -20,7 +20,7 @@ object Frm_principal: TFrm_principal
     Width = 1240
     Height = 90
     Align = alTop
-    Color = 16776176
+    Color = clActiveCaption
     ParentBackground = False
     TabOrder = 0
     object SpeedButton3: TSpeedButton
@@ -2147,6 +2147,7 @@ object Frm_principal: TFrm_principal
         0000000000000000000000000000000000000000000000000000}
       Layout = blGlyphTop
       ParentFont = False
+      OnClick = SpeedButton6Click
     end
     object SpeedButton7: TSpeedButton
       Left = 623
@@ -4950,13 +4951,36 @@ object Frm_principal: TFrm_principal
         Width = 50
       end>
   end
+  object Panel2: TPanel
+    Left = 0
+    Top = 90
+    Width = 1240
+    Height = 621
+    Align = alClient
+    Color = clTeal
+    ParentBackground = False
+    TabOrder = 2
+    object Label1: TLabel
+      Left = 244
+      Top = 243
+      Width = 752
+      Height = 89
+      Caption = 'SISTEMA DE CONTROLE'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindow
+      Font.Height = -67
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
   object Timer1: TTimer
     Left = 1168
     Top = 704
   end
   object MainMenu1: TMainMenu
-    Left = 400
-    Top = 304
+    Left = 280
+    Top = 232
     object Cadastro1: TMenuItem
       Caption = 'Cadastro'
       object Usurio1: TMenuItem
@@ -4988,6 +5012,7 @@ object Frm_principal: TFrm_principal
       Caption = 'Movimentos'
       object Compras1: TMenuItem
         Caption = '&Compras'
+        OnClick = Compras1Click
       end
       object Vendas1: TMenuItem
         Caption = '&Vendas'

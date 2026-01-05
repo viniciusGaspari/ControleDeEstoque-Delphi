@@ -1,0 +1,565 @@
+inherited Frm_compra01: TFrm_compra01
+  Caption = 'CADASTRO DE COMPRAS'
+  Font.Name = 'Nachlieli CLM'
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 13
+  inherited Panel1: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+  end
+  inherited Panel2: TPanel
+    Color = clTeal
+    StyleElements = [seFont, seClient, seBorder]
+    inherited DBNavigator1: TDBNavigator
+      Hints.Strings = ()
+    end
+    inherited BitBtn1: TBitBtn
+      OnClick = BitBtn1Click
+    end
+  end
+  inherited Panel3: TPanel
+    Height = 144
+    Color = clTeal
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitHeight = 144
+    object Label1: TLabel
+      Left = 17
+      Top = 8
+      Width = 65
+      Height = 13
+      Caption = 'ID_COMPRA'
+      FocusControl = dbIdCompra
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBtnFace
+      Font.Height = -12
+      Font.Name = 'Nachlieli CLM'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 17
+      Top = 51
+      Width = 96
+      Height = 13
+      Caption = 'ID_FORNECEDOR'
+      FocusControl = dbIdFornecedor
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBtnFace
+      Font.Height = -12
+      Font.Name = 'Nachlieli CLM'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label3: TLabel
+      Left = 17
+      Top = 101
+      Width = 95
+      Height = 13
+      Caption = 'ID_FORMA_PGTO'
+      FocusControl = dbFormaPgto
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBtnFace
+      Font.Height = -12
+      Font.Name = 'Nachlieli CLM'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 360
+      Top = 8
+      Width = 50
+      Height = 13
+      Caption = 'USUARIO'
+      FocusControl = dbUsuario
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBtnFace
+      Font.Height = -12
+      Font.Name = 'Nachlieli CLM'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 873
+      Top = 8
+      Width = 61
+      Height = 13
+      Caption = 'CADASTRO'
+      FocusControl = dbCadastro
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBtnFace
+      Font.Height = -12
+      Font.Name = 'Nachlieli CLM'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label6: TLabel
+      Left = 180
+      Top = 8
+      Width = 36
+      Height = 13
+      Caption = 'VALOR'
+      FocusControl = dbValor
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBtnFace
+      Font.Height = -12
+      Font.Name = 'Nachlieli CLM'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label7: TLabel
+      Left = 183
+      Top = 51
+      Width = 33
+      Height = 13
+      Caption = 'NOME'
+      FocusControl = dbNomeFornecedor
+    end
+    object Label8: TLabel
+      Left = 180
+      Top = 98
+      Width = 65
+      Height = 13
+      Caption = 'DESCRICAO'
+      FocusControl = dbFormaPgtoFromQ
+    end
+    object dbIdCompra: TDBEdit
+      Left = 17
+      Top = 24
+      Width = 134
+      Height = 21
+      DataField = 'ID_COMPRA'
+      DataSource = ds_padrao
+      Enabled = False
+      TabOrder = 0
+    end
+    object dbIdFornecedor: TDBEdit
+      Left = 17
+      Top = 67
+      Width = 134
+      Height = 21
+      DataField = 'ID_FORNECEDOR'
+      DataSource = ds_padrao
+      TabOrder = 3
+    end
+    object dbFormaPgto: TDBEdit
+      Left = 17
+      Top = 117
+      Width = 134
+      Height = 21
+      DataField = 'ID_FORMA_PGTO'
+      DataSource = ds_padrao
+      TabOrder = 4
+    end
+    object dbUsuario: TDBEdit
+      Left = 360
+      Top = 24
+      Width = 457
+      Height = 21
+      DataField = 'USUARIO'
+      DataSource = ds_padrao
+      Enabled = False
+      TabOrder = 2
+    end
+    object dbCadastro: TDBEdit
+      Left = 873
+      Top = 24
+      Width = 160
+      Height = 21
+      DataField = 'CADASTRO'
+      DataSource = ds_padrao
+      Enabled = False
+      TabOrder = 5
+    end
+    object dbValor: TDBEdit
+      Left = 180
+      Top = 24
+      Width = 137
+      Height = 21
+      DataField = 'VALOR'
+      DataSource = ds_padrao
+      TabOrder = 1
+    end
+    object dbNomeFornecedor: TDBLookupComboBox
+      Left = 180
+      Top = 70
+      Width = 192
+      Height = 22
+      DataField = 'NOME'
+      DataSource = ds_padrao
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Corbel'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 6
+    end
+    object dbFormaPgtoFromQ: TDBLookupComboBox
+      Left = 180
+      Top = 117
+      Width = 192
+      Height = 21
+      DataField = 'DESCRICAO'
+      DataSource = ds_padrao
+      TabOrder = 7
+    end
+  end
+  inherited Panel4: TPanel
+    Color = clTeal
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 440
+    object Label9: TLabel
+      Left = 17
+      Top = 15
+      Width = 51
+      Height = 13
+      Caption = 'id_produto'
+      FocusControl = dbIdProduto
+    end
+    object Label10: TLabel
+      Left = 205
+      Top = 15
+      Width = 21
+      Height = 13
+      Caption = 'qtde'
+      FocusControl = dbQtde
+    end
+    object Label11: TLabel
+      Left = 417
+      Top = 15
+      Width = 41
+      Height = 13
+      Caption = 'vl_custo'
+      FocusControl = dbVlCusto
+    end
+    object Label12: TLabel
+      Left = 638
+      Top = 15
+      Width = 45
+      Height = 13
+      Caption = 'desconto'
+      FocusControl = dbCusto
+    end
+    object Label13: TLabel
+      Left = 848
+      Top = 15
+      Width = 46
+      Height = 13
+      Caption = 'total_item'
+      FocusControl = DBEdit5
+    end
+    object dbIdProduto: TDBEdit
+      Left = 17
+      Top = 31
+      Width = 134
+      Height = 21
+      DataField = 'id_produto'
+      DataSource = ds_padrao_movimento
+      TabOrder = 0
+    end
+    object dbQtde: TDBEdit
+      Left = 205
+      Top = 31
+      Width = 160
+      Height = 21
+      DataField = 'qtde'
+      DataSource = ds_padrao_movimento
+      TabOrder = 1
+    end
+    object dbVlCusto: TDBEdit
+      Left = 417
+      Top = 31
+      Width = 160
+      Height = 21
+      DataField = 'vl_custo'
+      DataSource = ds_padrao_movimento
+      TabOrder = 2
+    end
+    object dbCusto: TDBEdit
+      Left = 638
+      Top = 31
+      Width = 160
+      Height = 21
+      DataField = 'desconto'
+      DataSource = ds_padrao_movimento
+      TabOrder = 3
+    end
+    object DBEdit5: TDBEdit
+      Left = 848
+      Top = 31
+      Width = 160
+      Height = 21
+      DataField = 'total_item'
+      DataSource = ds_padrao_movimento
+      TabOrder = 4
+    end
+  end
+  inherited DBGrid1: TDBGrid
+    Top = 209
+    Height = 237
+    DataSource = DataSource1
+    TitleFont.Name = 'Nachlieli CLM'
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'ID_COMPRA'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DESCRICAO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'USUARIO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CADASTRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VALOR'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID_FORNECEDOR'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID_FORMA_PGTO'
+        Visible = True
+      end>
+  end
+  inherited Q_padrao: TADOQuery
+    Active = True
+    SQL.Strings = (
+      'SELECT '
+      '    ID_COMPRA,'
+      '    ID_FORNECEDOR,'
+      '    ID_FORMA_PGTO,'
+      '    USUARIO,'
+      '    CADASTRO,'
+      '    VALOR'
+      'FROM COMPRA'
+      'ORDER BY ID_COMPRA;')
+    object Q_padraoID_COMPRA: TAutoIncField
+      FieldName = 'ID_COMPRA'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object Q_padraoNOME: TStringField
+      DisplayLabel = 'Nome do Fornecedor'
+      FieldKind = fkLookup
+      FieldName = 'NOME'
+      LookupDataSet = qryFornecedor
+      LookupKeyFields = 'id_fornecedor'
+      LookupResultField = 'nome'
+      KeyFields = 'ID_FORNECEDOR'
+      Size = 30
+      Lookup = True
+    end
+    object Q_padraoDESCRICAO: TStringField
+      DisplayLabel = 'Forma de Pgto'
+      FieldKind = fkLookup
+      FieldName = 'DESCRICAO'
+      LookupDataSet = qryFormaPgto
+      LookupKeyFields = 'id_forma_pgto'
+      LookupResultField = 'descricao'
+      KeyFields = 'ID_FORMA_PGTO'
+      Size = 60
+      Lookup = True
+    end
+    object Q_padraoUSUARIO: TStringField
+      FieldName = 'USUARIO'
+      Size = 30
+    end
+    object Q_padraoCADASTRO: TWideStringField
+      FieldName = 'CADASTRO'
+      Size = 10
+    end
+    object Q_padraoVALOR: TBCDField
+      FieldName = 'VALOR'
+      currency = True
+      Precision = 11
+      Size = 2
+    end
+    object Q_padraoID_FORNECEDOR: TIntegerField
+      FieldName = 'ID_FORNECEDOR'
+      Visible = False
+    end
+    object Q_padraoID_FORMA_PGTO: TIntegerField
+      FieldName = 'ID_FORMA_PGTO'
+      Visible = False
+    end
+  end
+  inherited Q_padrao_item: TADOQuery
+    Active = True
+    Parameters = <
+      item
+        Name = 'id_compra'
+        Attributes = [paSigned]
+        DataType = ftInteger
+        Precision = 10
+        Value = 8
+      end>
+    SQL.Strings = (
+      'SELECT '
+      ' id_sequencia,'
+      ' id_compra,'
+      ' id_produto,'
+      ' qtde,'
+      ' vl_custo,'
+      ' total_item,'
+      ' desconto'
+      'FROM item_compra'
+      'WHERE id_compra = :id_compra')
+    object Q_padrao_itemid_sequencia: TAutoIncField
+      FieldName = 'id_sequencia'
+      ReadOnly = True
+    end
+    object Q_padrao_itemid_compra: TIntegerField
+      FieldName = 'id_compra'
+    end
+    object Q_padrao_itemid_produto: TIntegerField
+      FieldName = 'id_produto'
+    end
+    object Q_padrao_itemqtde: TBCDField
+      FieldName = 'qtde'
+      Precision = 11
+      Size = 2
+    end
+    object Q_padrao_itemvl_custo: TBCDField
+      FieldName = 'vl_custo'
+      Precision = 11
+      Size = 2
+    end
+    object Q_padrao_itemtotal_item: TBCDField
+      FieldName = 'total_item'
+      Precision = 11
+      Size = 2
+    end
+    object Q_padrao_itemdesconto: TBCDField
+      FieldName = 'desconto'
+      Precision = 11
+      Size = 2
+    end
+    object Q_padrao_itemPRODUTO_DESCRICAO: TStringField
+      FieldKind = fkLookup
+      FieldName = 'PRODUTO_DESCRICAO'
+      LookupDataSet = qryProduto
+      LookupKeyFields = 'id_produto'
+      LookupResultField = 'produto_descricao'
+      KeyFields = 'id_produto'
+      Size = 30
+      Lookup = True
+    end
+  end
+  object qryFornecedor: TADOQuery
+    Active = True
+    Connection = DM.conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT '
+      ' id_fornecedor,'
+      ' nome'
+      ' FROM fornecedor'
+      ' ORDER BY id_fornecedor')
+    Left = 576
+    Top = 120
+    object qryFornecedorid_fornecedor: TAutoIncField
+      FieldName = 'id_fornecedor'
+      ReadOnly = True
+    end
+    object qryFornecedornome: TStringField
+      FieldName = 'nome'
+      Size = 30
+    end
+  end
+  object qryFormaPgto: TADOQuery
+    Active = True
+    Connection = DM.conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT'
+      ' id_forma_pgto,'
+      ' descricao'
+      'FROM forma_pgto'
+      'ORDER BY id_forma_pgto')
+    Left = 672
+    Top = 120
+    object qryFormaPgtoid_forma_pgto: TAutoIncField
+      FieldName = 'id_forma_pgto'
+      ReadOnly = True
+    end
+    object qryFormaPgtodescricao: TStringField
+      FieldName = 'descricao'
+      Size = 30
+    end
+  end
+  object dsFornecedor: TDataSource
+    DataSet = qryFornecedor
+    Left = 576
+    Top = 185
+  end
+  object dsFormaPgto: TDataSource
+    Left = 664
+    Top = 177
+  end
+  object qryProduto: TADOQuery
+    Active = True
+    Connection = DM.conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT'
+      ' id_produto,'
+      ' produto_descricao,'
+      ' estoque,'
+      ' estoque_min,'
+      ' vl_custo'
+      'FROM produto'
+      'ORDER BY id_produto')
+    Left = 640
+    Top = 328
+    object qryProdutoid_produto: TAutoIncField
+      FieldName = 'id_produto'
+      ReadOnly = True
+    end
+    object qryProdutoproduto_descricao: TStringField
+      FieldName = 'produto_descricao'
+      Size = 30
+    end
+    object qryProdutoestoque: TBCDField
+      FieldName = 'estoque'
+      Precision = 11
+      Size = 2
+    end
+    object qryProdutoestoque_min: TBCDField
+      FieldName = 'estoque_min'
+      Precision = 11
+      Size = 2
+    end
+    object qryProdutovl_custo: TBCDField
+      FieldName = 'vl_custo'
+      Precision = 11
+      Size = 2
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = qryProduto
+    Left = 784
+    Top = 313
+  end
+end

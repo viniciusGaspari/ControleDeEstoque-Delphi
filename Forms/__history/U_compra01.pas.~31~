@@ -1,0 +1,105 @@
+unit U_compra01;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, U_movimento_padrao, Data.DB,
+  Data.Win.ADODB, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.DBCtrls,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask;
+
+type
+  TFrm_compra01 = class(TFrm_padrao_movimento)
+    Q_padraoID_COMPRA: TAutoIncField;
+    Q_padraoUSUARIO: TStringField;
+    Q_padraoCADASTRO: TWideStringField;
+    Q_padraoVALOR: TBCDField;
+    Label1: TLabel;
+    dbIdCompra: TDBEdit;
+    Label2: TLabel;
+    dbIdFornecedor: TDBEdit;
+    Label3: TLabel;
+    dbFormaPgto: TDBEdit;
+    Label4: TLabel;
+    dbUsuario: TDBEdit;
+    Label5: TLabel;
+    dbCadastro: TDBEdit;
+    Label6: TLabel;
+    dbValor: TDBEdit;
+    qryFornecedor: TADOQuery;
+    qryFormaPgto: TADOQuery;
+    dsFornecedor: TDataSource;
+    dsFormaPgto: TDataSource;
+    qryFornecedorid_fornecedor: TAutoIncField;
+    qryFornecedornome: TStringField;
+    qryFormaPgtoid_forma_pgto: TAutoIncField;
+    qryFormaPgtodescricao: TStringField;
+    Q_padraoNOME: TStringField;
+    Label7: TLabel;
+    dbNomeFornecedor: TDBLookupComboBox;
+    Q_padraoDESCRICAO: TStringField;
+    Label8: TLabel;
+    dbFormaPgtoFromQ: TDBLookupComboBox;
+    Q_padraoID_FORNECEDOR: TIntegerField;
+    Q_padraoID_FORMA_PGTO: TIntegerField;
+    Q_padrao_itemid_sequencia: TAutoIncField;
+    Q_padrao_itemid_compra: TIntegerField;
+    Q_padrao_itemid_produto: TIntegerField;
+    Q_padrao_itemqtde: TBCDField;
+    Q_padrao_itemvl_custo: TBCDField;
+    Q_padrao_itemtotal_item: TBCDField;
+    Q_padrao_itemdesconto: TBCDField;
+    Label9: TLabel;
+    dbIdProduto: TDBEdit;
+    Label10: TLabel;
+    dbQtde: TDBEdit;
+    Label11: TLabel;
+    dbVlCusto: TDBEdit;
+    Label12: TLabel;
+    dbCusto: TDBEdit;
+    Label13: TLabel;
+    DBEdit5: TDBEdit;
+    qryProduto: TADOQuery;
+    qryProdutoid_produto: TAutoIncField;
+    qryProdutoproduto_descricao: TStringField;
+    qryProdutoestoque: TBCDField;
+    qryProdutoestoque_min: TBCDField;
+    qryProdutovl_custo: TBCDField;
+    Q_padrao_itemPRODUTO_DESCRICAO: TStringField;
+    DataSource1: TDataSource;
+    procedure bt_novoClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_compra01: TFrm_compra01;
+
+implementation
+
+{$R *.dfm}
+
+uses U_DM;
+
+procedure TFrm_compra01.BitBtn1Click(Sender: TObject);
+var proximo: integer;
+begin
+  inherited;
+  proximo := Q_padrao_itemid_sequencia.AsInteger + 1;
+  Q_padrao_item.Append;
+  Q_padrao_itemid_sequencia.AsInteger := proximo;
+end;
+
+procedure TFrm_compra01.bt_novoClick(Sender: TObject);
+begin
+  inherited;
+  Q_padraoCADASTRO.AsDateTime := date;
+  Q_padraoVALOR.AsCurrency := 0;
+  Q_padraoUSUARIO.AsString := 'Usuario Logado';
+  dbValor.SetFocus;
+end;
+
+end.
